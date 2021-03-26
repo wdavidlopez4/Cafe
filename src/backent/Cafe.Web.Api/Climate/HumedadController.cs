@@ -18,6 +18,13 @@ namespace Cafe.Web.Api.Climate
             return await Task.FromResult(Ok($"emergencia: {idCultivo}"));
         }
 
+        [Route("Fecundidad")]
+        [HttpGet]
+        public async Task<IActionResult> CalcularIndiceFecundidad(string idCultivo)
+        {
+            return await Task.FromResult(Ok($"fecundidad: {idCultivo}"));
+        }
+
         [Route("Get")]
         [HttpGet]
         public async Task<IActionResult> ObtenerHumedad(string idCultivo)

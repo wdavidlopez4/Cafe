@@ -25,6 +25,13 @@ namespace Cafe.Web.Api.Configuration
             return await Task.FromResult(Ok($"cultivo creado: {idCultivo}"));
         }
 
+        [HttpGet]
+        [Route("cultivos")]
+        public async Task<IActionResult> ObtenerCultivos(string idCultivo)
+        {
+            return await Task.FromResult(Ok($"cultivo creado: {idCultivo}"));
+        }
+
         [HttpPost]
         [Route("Temperatura")]
         public async Task<IActionResult> ConfigurarTemperatura(string idCultivo, double minimoUmbralDesarrolloInsecto, 
