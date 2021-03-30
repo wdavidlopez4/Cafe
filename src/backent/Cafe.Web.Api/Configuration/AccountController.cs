@@ -16,13 +16,13 @@ namespace Cafe.Web.Api.Configuration
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AcountController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IMediator mediator;
 
         private readonly IConfiguration configuration;
 
-        public AcountController(IMediator mediator, IConfiguration configuration)
+        public AccountController(IMediator mediator, IConfiguration configuration)
         {
             this.mediator = mediator;
             this.configuration = configuration;
@@ -71,6 +71,9 @@ namespace Cafe.Web.Api.Configuration
 
             //creamos la clave la cual tendra una variable de ambiente "Clave secreta" tambien la credencial y el expide
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["CLAVE_SECRETA"]));
+            if (key == null)
+                return BadRequest("la clave de seguridad nunca se instancio...");
+
             var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var issues = DateTime.UtcNow.AddDays(15); //expide
 
