@@ -70,9 +70,11 @@ namespace Cafe.Web.Api.Configuration
             };
 
             //creamos la clave la cual tendra una variable de ambiente "Clave secreta" tambien la credencial y el expide
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["CLAVE_SECRETA"]));
-            if (key == null)
+            string secret = this.configuration["CLAVE_SECRETA"];
+            if (secret == null || secret == "")
                 return BadRequest("la clave de seguridad nunca se instancio...");
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var issues = DateTime.UtcNow.AddDays(15); //expide
