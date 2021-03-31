@@ -29,7 +29,7 @@ namespace Cafe.Configuration.Infrastructure.Startup
         private static void ConfigurationSqlServer(IServiceCollection services, IConfiguration configuration)
         {
             // entity framework db context
-            string connString = configuration.GetConnectionString("ConnectionString"); //obtenemos la cadena de coneccion DESDE EL ARCHIVO APPSETTINGS
+            string connString = configuration.GetConnectionString("CafeConnectionString"); //obtenemos la cadena de coneccion DESDE EL ARCHIVO APPSETTINGS
             services.AddDbContext<CoffeeContext>(
                 options => options.UseSqlServer(connString));
         }
