@@ -69,13 +69,12 @@ namespace Cafe.Configuration.Infrastructure.Repository
         {
             try
             {
-                var entity = context.Set<T>().Update(obj);
+                context.Entry(await context.Set<T>().FirstOrDefaultAsync(x => x.Id == obj.Id)).CurrentValues.SetValues(obj);
 
-                //confirma que se añadio el objeto
                 if (await context.SaveChangesAsync(cancellationToken) < 0)
                     throw new Exception($"no se actualizo la entidad en la db: {obj.GetType()}");
 
-                return entity.Entity;
+                return await context.Set<T>().FirstOrDefaultAsync(x => x.Id == obj.Id);
             }
             catch (Exception e)
             {

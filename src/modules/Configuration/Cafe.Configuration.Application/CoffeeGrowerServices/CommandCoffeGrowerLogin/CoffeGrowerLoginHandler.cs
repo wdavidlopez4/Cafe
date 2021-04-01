@@ -37,21 +37,21 @@ namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrower
             else if (string.IsNullOrWhiteSpace(request.Mail) || string.IsNullOrWhiteSpace(request.Password))
                 throw new ArgumentNullException("contraseña o correo son nulos.");
 
-            else if(repository.Exists<CoffeeGrower>(x => x.Mail != request.Mail))
+            else if(! repository.Exists<CoffeeGrower>(x => x.Mail == request.Mail))
                 throw new ArgumentNullException("no se puede loquear por que el usuario no existe.");
 
 
-            //obtenemos el caficultor, creamos un nuevo token y desencriptamos la contraseña para luego contararla
+            //obtenemos el caficultor, creamos un nuevo token y encriptamos la contraseña para luego contararlas
             var coffeeGrower = await this.repository.Get<CoffeeGrower>(x => x.Mail == request.Mail, cancellationToken);
             var newToken = userSecurity.CreateToken(coffeeGrower.Mail, Guid.Parse(coffeeGrower.Id), coffeeGrower.Name);
-            var decryptPassword = userSecurity.EncriptAndDecryptPassword(coffeeGrower.Password);
+            var encriptResquestPassword = userSecurity.EncriptAndCheckPassword(request.Password);
 
 
             //verificamos la contraseña y el nuevo token
-            if (string.IsNullOrWhiteSpace(decryptPassword))
+            if (string.IsNullOrWhiteSpace(encriptResquestPassword))
                 throw new ArgumentNullException("des-encriptacion incorrecta.");
 
-            else if(decryptPassword != request.Password)
+            else if(encriptResquestPassword != coffeeGrower.Password)
                 throw new ArgumentNullException("la contraseñas son incorrectas.");
 
             else if (string.IsNullOrWhiteSpace(newToken))
@@ -60,7 +60,7 @@ namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrower
 
             //fabricamos el new caficultor para luego actualizarlo y posteriormente maperar a un dto para luego retornarlo
             var newCoffeeGrower = (CoffeeGrower)this.factory.CreateCoffeeGrower(name: coffeeGrower.Name, 
-                mail: coffeeGrower.Name, coffeeGrower.Password, token: newToken);
+                mail: coffeeGrower.Mail, password: coffeeGrower.Password, token: newToken, id: Guid.Parse(coffeeGrower.Id));
             return autoMapping.Map<CoffeeGrower, CoffeGrowerLoginDTO>(await repository.Update<CoffeeGrower>(newCoffeeGrower, cancellationToken));
 
         }

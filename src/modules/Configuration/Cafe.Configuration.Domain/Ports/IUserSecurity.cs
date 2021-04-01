@@ -8,6 +8,6 @@ namespace Cafe.Configuration.Domain.Ports
     {
         public string CreateToken(string mail, Guid id, string name);
 
-        public string EncriptAndDecryptPassword(string password);
+        public string EncriptAndCheckPassword(string password);
     }
 }

@@ -74,7 +74,7 @@ namespace Cafe.Configuration.Infrastructure.Securiry
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string EncriptAndDecryptPassword(string password)
+        public string EncriptAndCheckPassword(string password)
         {
             CheckPasswork(password);
 
