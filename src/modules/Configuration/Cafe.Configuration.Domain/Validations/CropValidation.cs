@@ -20,6 +20,9 @@ namespace Cafe.Configuration.Domain.Validations
 
             //si la contraseña es vacio o nula
             (c) => c.Password != null && c.Password != "",
+
+            //si el token es vacia o nula
+            (c) => c.Token != null && c.Token != ""
         };
     }
 }
