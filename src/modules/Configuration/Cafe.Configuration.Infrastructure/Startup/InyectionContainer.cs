@@ -2,6 +2,7 @@
 using Cafe.Configuration.Domain.Ports;
 using Cafe.Configuration.Infrastructure.Mapping;
 using Cafe.Configuration.Infrastructure.Repository;
+using Cafe.Configuration.Infrastructure.Securiry;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Cafe.Configuration.Infrastructure.Startup
             services.AddScoped<IRepository, RepositorySQL>();
             services.AddScoped<IAutoMapping, AutoMapping>();
             services.AddScoped<IFactory, Factory>();
+            services.AddScoped<IUserSecurity, UserSecurity>();
         }
     }
 }

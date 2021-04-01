@@ -8,9 +8,9 @@ namespace Cafe.Configuration.Domain.Factories
 {
     public class Factory : IFactory
     {
-        public EntityBase CreateCoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null)
+        public EntityBase CreateCoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null, Guid? id = null)
         {
-            return new CoffeeGrower(name, mail, password, token, crops);
+            return new CoffeeGrower(name, mail, password, token, crops, id);
         }
     }
 }

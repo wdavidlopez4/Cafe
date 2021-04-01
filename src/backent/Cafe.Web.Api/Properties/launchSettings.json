@@ -14,8 +14,10 @@
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
       "environmentVariables": {
+        "DIAS_EXPIRACION": "15",
         "CLAVE_SECRETA": "jjshhshbahsuhabsbabgsg773723732gasvs7qg7sagas7sag6f3f23fvs6ga",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOMINIO_APP": "IIE_prueba"
       }
     },
     "Cafe.Web.Api": {

@@ -17,7 +17,7 @@ namespace Cafe.Configuration.Domain.Entities
 
         public string Token { get; private set; }
 
-        internal CoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null): base()
+        internal CoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null, Guid? id = null): base(id)
         {
             this.Name = name;
             this.Mail = mail;

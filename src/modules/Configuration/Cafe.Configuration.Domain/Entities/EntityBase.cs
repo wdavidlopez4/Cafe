@@ -6,11 +6,12 @@ namespace Cafe.Configuration.Domain.Entities
 {
     public abstract class EntityBase
     {
-        public string Id { get; private set; }
+        public string Id { get; protected set; }
 
-        internal EntityBase()
+        internal EntityBase(Guid? id = null)
         {
-            this.Id = Guid.NewGuid().ToString();
+            this.Id = id == null ? Guid.NewGuid().ToString() : id.ToString();
         }
+
     }
 }

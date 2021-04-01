@@ -3,6 +3,8 @@ using Cafe.Configuration.Domain.Ports;
 using Cafe.Configuration.Infrastructure.EFcore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +35,19 @@ namespace Cafe.Configuration.Infrastructure.Repository
             catch (Exception e)
             {
                 throw new Exception($"{e.Message}");
+            }
+        }
+
+        public bool Exists<T>(Expression<Func<T, bool>> expression) where T : EntityBase
+        {
+            try
+            {
+                return context.Set<T>().AsQueryable().Any(expression);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"no se pudo verificiar si existe la entidad {e.Message}");
             }
         }
     }
