@@ -21,12 +21,9 @@ namespace Cafe.Web.Api.Configuration
     {
         private readonly IMediator mediator;
 
-        private readonly IConfiguration configuration;
-
-        public AccountController(IMediator mediator, IConfiguration configuration)
+        public AccountController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.configuration = configuration;
         }
 
         [Route("Cuenta")]
