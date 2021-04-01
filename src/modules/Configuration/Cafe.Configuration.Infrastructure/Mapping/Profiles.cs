@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerCreate;
+using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
+using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
 using Cafe.Configuration.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace Cafe.Configuration.Infrastructure.Mapping
     {
         public Profiles()
         {
-            this.CreateMap<CoffeeGrower, CoffeeGrowerCreateDTO>();
+            this.CreateMap<CoffeeGrower, CoffeeGrowerSignInDTO>();
+            this.CreateMap<CoffeeGrower, CoffeGrowerLoginDTO>();
         }
     }
 }

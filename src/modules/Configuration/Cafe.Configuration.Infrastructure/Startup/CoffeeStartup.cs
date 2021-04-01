@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration; //getConnectionString
 using MediatR;
-using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerCreate;
+using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
+using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
 
 namespace Cafe.Configuration.Infrastructure.Startup
 {
@@ -50,7 +51,8 @@ namespace Cafe.Configuration.Infrastructure.Startup
         /// <param name="services"></param>
         private static void ConfigurarMediador(IServiceCollection services)
         {
-            services.AddMediatR(typeof(CoffeeGrowerCreate).Assembly);
+            services.AddMediatR(typeof(CoffeeGrowerSignIn).Assembly);
+            services.AddMediatR(typeof(CoffeGrowerLogin).Assembly);
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerCreate
+namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn
 {
-    public class CoffeeGrowerCreateDTO
+    public class CoffeeGrowerSignIn : IRequest<CoffeeGrowerSignInDTO>
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string Mail { get; set; }

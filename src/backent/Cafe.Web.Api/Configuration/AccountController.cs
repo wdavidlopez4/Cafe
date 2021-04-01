@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerCreate;
+﻿using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
+using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,70 +31,31 @@ namespace Cafe.Web.Api.Configuration
 
         [Route("Cuenta")]
         [HttpPost]
-        public async Task<IActionResult> CreateAcount([FromBody] CoffeeGrowerCreate coffeGrowerCreate)
+        public async Task<IActionResult> CreateAcount([FromBody] CoffeeGrowerSignIn coffeGrowerSignIn)
         {
             if(!ModelState.IsValid)
                 return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            var dto = await mediator.Send(coffeGrowerSignIn);
+            if (dto == null)
+                return BadRequest("no se pudo crear la cuenta.");
             else
-            {
-                var dto = await mediator.Send(coffeGrowerCreate);
-                if (dto == null)
-                    return BadRequest("no se pudo crear la cuenta.");
-                else
-                {
-                    return this.CreateToken(dto);
-                }
-            }
+                return Ok(dto);
         }
 
         [Route("Logear")]
         [HttpPost]
-        public async Task<IActionResult> Logearse([FromBody] string correo, string contraseña)
+        public async Task<IActionResult> Logearse([FromBody] CoffeGrowerLogin coffeGrowerLogin)
         {
-            return await Task.FromResult(Ok($"logeado: {correo}, {contraseña}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            var dto = await this.mediator.Send(coffeGrowerLogin);
+            if (dto == null)
+                return BadRequest("no se pudo logear el usuario.");
+            else
+                return Ok(dto);
         }
 
-        /// <summary>
-        /// creacion del token
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        private IActionResult CreateToken(CoffeeGrowerCreateDTO dto)
-        {
-            //creamos el cleims
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.UniqueName, dto.Mail),
-                new Claim(JwtRegisteredClaimNames.NameId, dto.Id),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("nombre", dto.Name)
-            };
-
-            //creamos la clave la cual tendra una variable de ambiente "Clave secreta" tambien la credencial y el expide
-            string secret = this.configuration["CLAVE_SECRETA"];
-            if (secret == null || secret == "")
-                return BadRequest("la clave de seguridad nunca se instancio...");
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-
-            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var issues = DateTime.UtcNow.AddDays(15); //expide
-
-            //creamos el token con los datos anteriores
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer: "dominio web",
-                audience: "dominio web",
-                claims: claims,
-                expires: issues,//expide
-                signingCredentials: credential
-                );
-
-            //retornamos el token y el expide del token
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = issues
-            });
-        }
     }
 }

@@ -17,7 +17,15 @@ namespace Cafe.Configuration.Infrastructure.Mapping
 
         public TDestination Map<TSource, TDestination>(TSource source)
         {
-            return mapper.Map<TSource, TDestination>(source);
+            try
+            {
+                return mapper.Map<TSource, TDestination>(source);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"no se pudo mapear la entidad: {e.Message}");
+            }
         }
     }
 }

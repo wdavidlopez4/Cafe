@@ -7,6 +7,6 @@ namespace Cafe.Configuration.Domain.Factories
 {
     public interface IFactory
     {
-        public EntityBase CreateCoffeeGrower(string name, string mail, string password, List<Crop> crops = null);
+        public EntityBase CreateCoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null, Guid? id = null);
     }
 }
