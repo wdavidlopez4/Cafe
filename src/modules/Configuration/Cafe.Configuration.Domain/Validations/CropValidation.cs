@@ -7,22 +7,16 @@ namespace Cafe.Configuration.Domain.Validations
 {
     public class CropValidation
     {
-        internal static readonly Predicate<CoffeeGrower>[] Validation =
+        internal static readonly Predicate<Crop>[] Validation =
         {
-            //si el id es vacio o nulo
-            (c) => c.Id != null && c.Id != "",
+            (c)=> c.Id != null && c.Id != "",
 
-            //si el nombre es vacio o nulo
-            (c) => c.Name != null && c.Name != "",
+            (c)=> c.Nombre != null && c.Nombre != "",
 
-            //si el correo es vacio o nulo
-            (c) => c.Mail != null && c.Mail != "",
+            (c)=> c.DiasFormacion >= 0,
 
-            //si la contraseña es vacio o nula
-            (c) => c.Password != null && c.Password != "",
+            (c)=> c.CoffeeGrowerId != null && c.CoffeeGrowerId != ""
 
-            //si el token es vacia o nula
-            (c) => c.Token != null && c.Token != ""
         };
     }
 }
