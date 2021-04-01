@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cafe.Configuration.Application.CropServices.CommandCropCreate;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,26 @@ namespace Cafe.Web.Api.Configuration
     [ApiController]
     public class CultivoConfiguracionController : ControllerBase
     {
+        private readonly IMediator mediator;
+
+        public CultivoConfiguracionController(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
+
+
         [HttpPut]
         [Route("cultivo")]
-        public async Task<IActionResult> CrearCultivo(string idUsuario, string nombre, int diasFormacionFrutos)
+        public async Task<IActionResult> CrearCultivo([FromBody] CropCreate cropCreate)
         {
-            return await Task.FromResult(Ok($"cultivo creado: {idUsuario} {nombre} {diasFormacionFrutos}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            var dto = await this.mediator.Send(cropCreate);
+            if (dto == null)
+                return BadRequest("no se pudo crear el cultivo.");
+            else
+                return Ok(dto);
         }
 
         [HttpGet]

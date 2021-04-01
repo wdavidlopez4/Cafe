@@ -7,9 +7,9 @@ namespace Cafe.Configuration.Domain.Entities
 {
     public class Crop : EntityBase
     {
-        public string Nombre { get; private set; }
+        public string Name { get; private set; }
 
-        public int DiasFormacion { get; private set; }
+        public int DayFormation { get; private set; }
 
         public string ConfigurationCropId { get; private set; }
 
@@ -19,10 +19,10 @@ namespace Cafe.Configuration.Domain.Entities
 
         public ConfigurationCrop ConfigurationCrop { get; private set; }
 
-        internal Crop(string nombre, int diasFormacion, string coffeeGrowerId, string configurationCropId = null) : base()
+        internal Crop(string name, int DayFormation, string coffeeGrowerId, string configurationCropId = null) : base()
         {
-            this.Nombre = nombre;
-            this.DiasFormacion = diasFormacion;
+            this.Name = name;
+            this.DayFormation = DayFormation;
             this.CoffeeGrowerId = coffeeGrowerId;
             this.ConfigurationCropId = configurationCropId;
 

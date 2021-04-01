@@ -11,9 +11,9 @@ namespace Cafe.Configuration.Domain.Validations
         {
             (c)=> c.Id != null && c.Id != "",
 
-            (c)=> c.Nombre != null && c.Nombre != "",
+            (c)=> c.Name != null && c.Name != "",
 
-            (c)=> c.DiasFormacion >= 0,
+            (c)=> c.DayFormation >= 0,
 
             (c)=> c.CoffeeGrowerId != null && c.CoffeeGrowerId != ""
 

@@ -7,9 +7,9 @@ namespace Cafe.Configuration.Application.CropServices.CommandCropCreate
 {
     public class CropCreate : IRequest<CropCreateDTO>
     {
-        public string Nombre { get; set; }
+        public string Name { get; set; }
 
-        public int DiasFormacion { get; set; }
+        public int DayFormation { get; set; }
 
         public string CoffeeGrowerId { get; set; }
     }

@@ -30,7 +30,7 @@ namespace Cafe.Configuration.Application.CropServices.CommandCropCreate
             if (request == null)
                 throw new ArgumentNullException("la peticion es nula al crear el cultivo.");
 
-            var crop = (Crop) this.factory.CreateCrop(request.Nombre, request.DiasFormacion, request.CoffeeGrowerId);
+            var crop = (Crop) this.factory.CreateCrop(request.Name, request.DayFormation, request.CoffeeGrowerId);
 
             return autoMapping.Map<Crop, CropCreateDTO>(await this.repository.Save<Crop>(crop, cancellationToken));
         }
