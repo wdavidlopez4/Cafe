@@ -38,7 +38,7 @@ namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrower
             //creamos datos necesarios para el caficultor
             var id = Guid.NewGuid();
             var token = userSecurity.CreateToken(request.Mail, id, request.Name);
-            var encriptPassword = userSecurity.EncriptAndCkeckPassword(request.Password);
+            var encriptPassword = userSecurity.EncriptAndDecryptPassword(request.Password);
             if (token == null || encriptPassword == null)
                 throw new Exception("no se pudo generar el token o encriptar la contraseña.");
 
