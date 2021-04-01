@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cafe.Configuration.Domain.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,13 +7,27 @@ namespace Cafe.Configuration.Domain.Entities
 {
     public class Crop : EntityBase
     {
-        public string IdCoffeeGrower { get; private set; }
+        public string Name { get; private set; }
+
+        public int DayFormation { get; private set; }
+
+        public string ConfigurationCropId { get; private set; }
+
+        public string CoffeeGrowerId { get; private set; }
         
         public CoffeeGrower CoffeeGrower { get; private set; }
 
-        internal Crop(string idCoffeeGrower) : base()
+        public ConfigurationCrop ConfigurationCrop { get; private set; }
+
+        internal Crop(string name, int DayFormation, string coffeeGrowerId, string configurationCropId = null) : base()
         {
-            this.IdCoffeeGrower = idCoffeeGrower;
+            this.Name = name;
+            this.DayFormation = DayFormation;
+            this.CoffeeGrowerId = coffeeGrowerId;
+            this.ConfigurationCropId = configurationCropId;
+
+            if (Validator.Validate<Crop>(this, CropValidation.Validation) == false)
+                throw new ArgumentException("la entidad se valido como erronea.");
         }
 
         private Crop()

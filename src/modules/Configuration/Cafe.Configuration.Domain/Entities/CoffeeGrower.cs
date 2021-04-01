@@ -25,7 +25,7 @@ namespace Cafe.Configuration.Domain.Entities
             this.Crops = crops;
             this.Token = token;
 
-            if (Validator.Validate<CoffeeGrower>(this, CropValidation.Validation) == false)
+            if (Validator.Validate<CoffeeGrower>(this, CoffeeGrowerValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
         }
 
