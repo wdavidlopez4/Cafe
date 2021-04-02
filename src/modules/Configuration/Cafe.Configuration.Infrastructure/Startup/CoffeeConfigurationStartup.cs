@@ -11,7 +11,7 @@ using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogi
 
 namespace Cafe.Configuration.Infrastructure.Startup
 {
-    public static class CoffeeStartup
+    public static class CoffeeConfigurationStartup
     {
         public static void ConfigurationServices(IServiceCollection services, IConfiguration configuration)
         {

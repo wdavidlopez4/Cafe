@@ -1,4 +1,5 @@
 using Cafe.Configuration.Infrastructure.Startup;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Cafe.Web.Api
@@ -28,8 +31,24 @@ namespace Cafe.Web.Api
         {
             services.AddControllers();
 
+            //configuracion api
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = Configuration["DOMINIO_APP"],
+                     ValidAudience = Configuration["DOMINIO_APP"],
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(Configuration["CLAVE_SECRETA"])),
+                     ClockSkew = TimeSpan.Zero
+                 });
+
             //iniciar y configurar los modulos
-            CoffeeStartup.ConfigurationServices(services, this.Configuration);
+            CoffeeConfigurationStartup.ConfigurationServices(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +58,8 @@ namespace Cafe.Web.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

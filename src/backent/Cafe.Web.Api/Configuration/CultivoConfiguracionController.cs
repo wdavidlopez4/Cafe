@@ -1,5 +1,7 @@
 ﻿using Cafe.Configuration.Application.CropServices.CommandCropCreate;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +25,7 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpPut]
         [Route("cultivo")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> CrearCultivo([FromBody] CropCreate cropCreate)
         {
             if (!ModelState.IsValid)
