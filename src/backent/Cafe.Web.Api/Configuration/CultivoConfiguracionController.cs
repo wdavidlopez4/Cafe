@@ -34,7 +34,13 @@ namespace Cafe.Web.Api.Configuration
             if (!ModelState.IsValid)
                 return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
 
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            cropCreate.Claims = claims;
             var dto = await this.mediator.Send(cropCreate);
+
             if (dto == null)
                 return BadRequest("no se pudo crear el cultivo.");
             else

@@ -30,6 +30,12 @@ namespace Cafe.Configuration.Application.CropServices.CommandCropCreate
             if (request == null)
                 throw new ArgumentNullException("la peticion es nula al crear el cultivo.");
 
+            var coffeeGrowerIdPresent = request.Claims.Find(x => x.Type == "CoffeeGrowerId").Value;
+            if(coffeeGrowerIdPresent == null)
+                throw new ArgumentNullException("en el token enviado no se pudo recuperar el id del caficultor");
+            else if (request.CoffeeGrowerId != coffeeGrowerIdPresent)
+                throw new Exception("el id del caficultor y el token que contine el id del cadicultor no son iguales.");
+
             var crop = (Crop) this.factory.CreateCrop(request.Name, request.DayFormation, request.CoffeeGrowerId);
 
             return autoMapping.Map<Crop, CropCreateDTO>(await this.repository.Save<Crop>(crop, cancellationToken));
