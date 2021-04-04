@@ -1,4 +1,5 @@
 ﻿using Cafe.Configuration.Application.CropServices.CommandCropCreate;
+using Cafe.Configuration.Application.CropServices.QueryCropById;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Providers.Entities;
 
 namespace Cafe.Web.Api.Configuration
 {
@@ -40,9 +43,23 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpGet]
         [Route("cultivo")]
-        public async Task<IActionResult> ObtenerCultivo(string idCultivo)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ObtenerCultivo([FromBody] CropById cropById)
         {
-            return await Task.FromResult(Ok($"cultivo creado: {idCultivo}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            cropById.Claims = claims;
+            var dto = await this.mediator.Send(cropById);
+
+            if (dto == null)
+                return BadRequest("no se pudo obtener el cultivo");
+            else
+                return Ok(dto);
         }
 
         [HttpGet]

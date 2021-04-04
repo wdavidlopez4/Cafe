@@ -1,9 +1,11 @@
 ﻿using Cafe.Configuration.Domain.Ports;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -32,9 +34,9 @@ namespace Cafe.Configuration.Infrastructure.Securiry
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.UniqueName, mail),
-                new Claim(JwtRegisteredClaimNames.NameId, id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("nombre", name)
+                new Claim("nombre", name),
+                new Claim("CoffeeGrowerId", id.ToString())
             };
 
             //obtener variables de entorno
@@ -95,6 +97,20 @@ namespace Cafe.Configuration.Infrastructure.Securiry
                 throw new ArgumentNullException("0 caracteres para la contraseña");
             else if (password.Length < 7)
                 throw new ArgumentNullException("la contraseña es muy corta debe por lo menos tener 7 caracteres.");
+        }
+
+        /// <summary>
+        /// validacion del token
+        /// </summary>
+        /// <param name="jwtToken"></param>
+        /// <returns></returns>
+        public string GetClaim(string token, string claimType)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+            var stringClaimValue = securityToken.Claims.First(claim => claim.Type == claimType).Value;
+            return stringClaimValue;
         }
     }
 }

@@ -82,6 +82,20 @@ namespace Cafe.Configuration.Infrastructure.Repository
             }
         }
 
+        public async Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional, 
+            Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase
+        {
+            try
+            {
+                return await context.Set<T>().Include(expressionNested).FirstOrDefaultAsync(expressionConditional, cancellationToken);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"no se pudo recuperar la entidad {e.Message}");
+            }
+        }
+
 
     }
 }
