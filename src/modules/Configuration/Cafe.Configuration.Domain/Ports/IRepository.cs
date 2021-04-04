@@ -42,6 +42,17 @@ namespace Cafe.Configuration.Domain.Ports
         /// <param name="obj"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<T> Update<T>(T obj, CancellationToken cancellationToken) where T : EntityBase; 
+        public Task<T> Update<T>(T obj, CancellationToken cancellationToken) where T : EntityBase;
+
+        /// <summary>
+        /// retorna un objeto anidado, retorna el objeto pero un un solo objeto anidado.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expressionConditional"></param>
+        /// <param name="expressionNested"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional,
+            Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase;
     }
 }

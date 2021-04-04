@@ -15,18 +15,36 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropById
 
         private readonly IAutoMapping autoMapping;
 
-        public CropByIdHandler(IRepository repository, IAutoMapping autoMapping)
+        private readonly IUserSecurity userSecurity;
+
+        public CropByIdHandler(IRepository repository, IAutoMapping autoMapping, IUserSecurity userSecurity)
         {
             this.autoMapping = autoMapping;
             this.repository = repository;
+            this.userSecurity = userSecurity;
         }
 
         public async Task<CropByIdDTO> Handle(CropById request, CancellationToken cancellationToken)
         {
+            //verificar la peticion
             if (request == null)
                 throw new ArgumentNullException("la peticion para recuperar el cultivo es nula");
 
-            return autoMapping.Map<Crop, CropByIdDTO>(await this.repository.Get<Crop>(x => x.Id == request.Id, cancellationToken));
+            //obtener el id del caficultor del token que me enviaron
+            var coffeeGowerIdPresent =  request.Claims.Find(x=> x.Type == "CoffeeGrowerId").Value;
+            if (coffeeGowerIdPresent == null)
+                throw new Exception("no se pudo recuperar el id del claim");
+
+            //obtener el cultivo con el caficultor
+            var crop = await this.repository.GetWithObjetc<Crop>(x => x.Id == request.Id, x => x.CoffeeGrower, cancellationToken);
+
+            //descodificar el token del caficultor que se obtuvo para obtener el id del caficultor
+            string CoffeeGrowerIdDb = this.userSecurity.GetClaim(crop.CoffeeGrower.Token, "CoffeeGrowerId");
+
+            //comprar tanto el id del token que se envio con el token de la db y si es correcto enviar el cultivo
+            if (CoffeeGrowerIdDb != coffeeGowerIdPresent)
+                throw new Exception("el id del caficultor no correcponde al id que se almaceno en clam del token");
+            return autoMapping.Map<Crop, CropByIdDTO>(crop);
         }
     }
 }
