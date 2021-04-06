@@ -1,5 +1,6 @@
 ﻿using Cafe.Configuration.Application.CropServices.CommandCropCreate;
 using Cafe.Configuration.Application.CropServices.QueryCropById;
+using Cafe.Configuration.Application.CropServices.QueryCropByPage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -70,9 +71,19 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpGet]
         [Route("cultivos")]
-        public async Task<IActionResult> ObtenerCultivos(string idCultivo)
+        public async Task<IActionResult> ObtenerCultivos([FromBody] CropByPage cropByPage)
         {
-            return await Task.FromResult(Ok($"cultivo creado: {idCultivo}"));
+            if (cropByPage == null)
+                return BadRequest("el modelo es incorrecto.");
+
+            cropByPage.Claims = User.Claims.ToList();
+
+            var dto = await this.mediator.Send(cropByPage);
+            if (dto == null)
+                return BadRequest("la restuesta para obtener el culto fue nula");
+            else
+                return Ok(dto);
+
         }
 
         [HttpPost]
