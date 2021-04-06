@@ -82,7 +82,7 @@ namespace Cafe.Configuration.Infrastructure.Repository
             }
         }
 
-        public async Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional, 
+        public async Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional,
             Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase
         {
             try
@@ -96,6 +96,25 @@ namespace Cafe.Configuration.Infrastructure.Repository
             }
         }
 
-
+        public async Task<List<T>> GetAllBy<T>(Expression<Func<T, string>> sort, int page, int pageSize, 
+            Expression<Func<T, object>> expressionNested, Expression<Func<T, bool>> expressionConditional, 
+            CancellationToken cancellationToken) where T : EntityBase
+        {
+            try
+            {
+                int skipRows = (page) * pageSize;
+                return await context.Set<T>()
+                    .Include(expressionNested)
+                    .Where(expressionConditional)
+                    .OrderBy(sort)
+                    .Skip(skipRows)
+                    .Take(pageSize)
+                    .ToListAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"no se pudo actualizr  la entidad {e.Message}");
+            }
+        }
     }
 }

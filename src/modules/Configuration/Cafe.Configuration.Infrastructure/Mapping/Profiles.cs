@@ -3,6 +3,7 @@ using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogi
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
 using Cafe.Configuration.Application.CropServices.CommandCropCreate;
 using Cafe.Configuration.Application.CropServices.QueryCropById;
+using Cafe.Configuration.Application.CropServices.QueryCropByPage;
 using Cafe.Configuration.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<CoffeeGrower, CoffeGrowerLoginDTO>();
             this.CreateMap<Crop, CropCreateDTO>();
             this.CreateMap<Crop, CropByIdDTO>();
+            this.CreateMap<Crop, CropByPageDTO>();
         }
     }
 }

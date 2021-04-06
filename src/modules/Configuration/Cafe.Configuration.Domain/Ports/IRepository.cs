@@ -54,5 +54,20 @@ namespace Cafe.Configuration.Domain.Ports
         /// <returns></returns>
         public Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional,
             Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase;
+
+        /// <summary>
+        /// trae una lista de objetos
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sort"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="expressionNested"></param>
+        /// <param name="expressionConditional"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<List<T>> GetAllBy<T>(Expression<Func<T, string>> sort, int page, int pageSize,
+            Expression<Func<T, object>> expressionNested, Expression<Func<T, bool>> expressionConditional,
+            CancellationToken cancellationToken) where T : EntityBase;
     }
 }
