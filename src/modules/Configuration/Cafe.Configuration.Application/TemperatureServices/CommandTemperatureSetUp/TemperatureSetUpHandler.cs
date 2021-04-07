@@ -60,7 +60,7 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             }
 
             //creamos, guardamos, mapeamos y retornamos la temperatura configuracion
-            var temperature = (Temperature) this.factory.CreateTemperature(configurationCrop.Id, request.MaximunThresholdInsectDevelioment, 
+            var temperature = (Temperature) this.factory.CreateTemperature(configurationCrop.Id, request.MinimumThresholdInsectDevelopment, 
                 request.MaximunThresholdInsectDevelioment, request.MinimumEffectiveGrade, configurationCrop);
 
             return this.autoMapping.Map<Temperature, TemperatureSetUpDTO>(await this.repository.Save<Temperature>(temperature, cancellationToken));
