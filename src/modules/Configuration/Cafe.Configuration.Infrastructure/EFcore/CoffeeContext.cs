@@ -10,6 +10,13 @@ namespace Cafe.Configuration.Infrastructure.EFcore
     {
         public DbSet<CoffeeGrower> CoffeeGrowers { get; set; }
 
+        public DbSet<ConfigurationCrop> ConfigurationCrops { get; set; }
+
+        public DbSet<Crop> Crops { get; set; }
+
+        public DbSet<Temperature> Temperatures { get; set; }
+
+        
         public CoffeeContext(DbContextOptions options) : base(options)
         {
 

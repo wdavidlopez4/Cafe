@@ -52,7 +52,7 @@ namespace Cafe.Configuration.Domain.Ports
         /// <param name="expressionNested"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional,
+        public Task<T> GetWithNestedObject<T>(Expression<Func<T, bool>> expressionConditional,
             Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase;
 
         /// <summary>
@@ -69,5 +69,17 @@ namespace Cafe.Configuration.Domain.Ports
         public Task<List<T>> GetAllBy<T>(Expression<Func<T, string>> sort, int page, int pageSize,
             Expression<Func<T, object>> expressionNested, Expression<Func<T, bool>> expressionConditional,
             CancellationToken cancellationToken) where T : EntityBase;
+
+        /// <summary>
+        /// obtener un obteto con varios objetos anidados
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cancellationToken"></param>
+        /// <param name="expressionConditional"></param>
+        /// <param name="expressionsNested"></param>
+        /// <returns></returns>
+        public Task<T> GetWithNestedObjects<T>(CancellationToken cancellationToken, Expression<Func<T, bool>> expressionConditional,
+            params Expression<Func<T, object>>[] expressionsNested) where T : EntityBase;
+
     }
 }

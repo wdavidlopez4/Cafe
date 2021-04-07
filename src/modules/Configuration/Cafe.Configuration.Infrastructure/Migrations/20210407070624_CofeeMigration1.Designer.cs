@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cafe.Configuration.Infrastructure.Migrations
 {
     [DbContext(typeof(CoffeeContext))]
-    [Migration("20210401102419_CoffeeMigration3")]
-    partial class CoffeeMigration3
+    [Migration("20210407070624_CofeeMigration1")]
+    partial class CofeeMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,12 +44,19 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.ConfigurationCrop", b =>
                 {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CropId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CropId");
+                    b.HasKey("Id");
 
-                    b.ToTable("ConfigurationCrop");
+                    b.HasIndex("CropId")
+                        .IsUnique()
+                        .HasFilter("[CropId] IS NOT NULL");
+
+                    b.ToTable("ConfigurationCrops");
                 });
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Crop", b =>
@@ -58,9 +65,6 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CoffeeGrowerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConfigurationCropId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("DayFormation")
@@ -73,11 +77,40 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
                     b.HasIndex("CoffeeGrowerId");
 
+                    b.ToTable("Crops");
+                });
+
+            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Temperature", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConfigurationCropId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("MaximunThresholdInsectDevelioment")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MinimumEffectiveGrade")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MinimumThresholdInsectDevelopment")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("ConfigurationCropId")
                         .IsUnique()
                         .HasFilter("[ConfigurationCropId] IS NOT NULL");
 
-                    b.ToTable("Crop");
+                    b.ToTable("Temperatures");
+                });
+
+            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.ConfigurationCrop", b =>
+                {
+                    b.HasOne("Cafe.Configuration.Domain.Entities.Crop", "Crop")
+                        .WithOne("ConfigurationCrop")
+                        .HasForeignKey("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "CropId");
                 });
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Crop", b =>
@@ -85,10 +118,13 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                     b.HasOne("Cafe.Configuration.Domain.Entities.CoffeeGrower", "CoffeeGrower")
                         .WithMany("Crops")
                         .HasForeignKey("CoffeeGrowerId");
+                });
 
+            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Temperature", b =>
+                {
                     b.HasOne("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "ConfigurationCrop")
-                        .WithOne("Crop")
-                        .HasForeignKey("Cafe.Configuration.Domain.Entities.Crop", "ConfigurationCropId");
+                        .WithOne("Temperature")
+                        .HasForeignKey("Cafe.Configuration.Domain.Entities.Temperature", "ConfigurationCropId");
                 });
 #pragma warning restore 612, 618
         }

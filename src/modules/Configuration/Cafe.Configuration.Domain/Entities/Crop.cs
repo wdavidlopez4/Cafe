@@ -11,20 +11,17 @@ namespace Cafe.Configuration.Domain.Entities
 
         public int DayFormation { get; private set; }
 
-        public string ConfigurationCropId { get; private set; }
-
         public string CoffeeGrowerId { get; private set; }
         
         public CoffeeGrower CoffeeGrower { get; private set; }
 
         public ConfigurationCrop ConfigurationCrop { get; private set; }
 
-        internal Crop(string name, int DayFormation, string coffeeGrowerId, string configurationCropId = null) : base()
+        internal Crop(string name, int DayFormation, string coffeeGrowerId) : base()
         {
             this.Name = name;
             this.DayFormation = DayFormation;
             this.CoffeeGrowerId = coffeeGrowerId;
-            this.ConfigurationCropId = configurationCropId;
 
             if (Validator.Validate<Crop>(this, CropValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
@@ -32,7 +29,7 @@ namespace Cafe.Configuration.Domain.Entities
 
         private Crop()
         {
-
+            //ef
         }
     }
 }
