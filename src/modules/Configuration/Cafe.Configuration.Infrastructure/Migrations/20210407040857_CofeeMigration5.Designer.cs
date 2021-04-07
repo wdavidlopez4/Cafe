@@ -3,20 +3,43 @@ using Cafe.Configuration.Infrastructure.EFcore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cafe.Configuration.Infrastructure.Migrations
 {
     [DbContext(typeof(CoffeeContext))]
-    partial class CoffeeContextModelSnapshot : ModelSnapshot
+    [Migration("20210407040857_CofeeMigration5")]
+    partial class CofeeMigration5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Climate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConfigurationCropId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConfigurationCropId");
+
+                    b.ToTable("Climate");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Climate");
+                });
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.CoffeeGrower", b =>
                 {
@@ -44,6 +67,9 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                 {
                     b.Property<string>("CropId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClimateId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(max)");
@@ -79,11 +105,7 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Temperature", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConfigurationCropId")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasBaseType("Cafe.Configuration.Domain.Entities.Climate");
 
                     b.Property<double>("MaximunThresholdInsectDevelioment")
                         .HasColumnType("float");
@@ -94,13 +116,14 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                     b.Property<double>("MinimumThresholdInsectDevelopment")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasDiscriminator().HasValue("Temperature");
+                });
 
-                    b.HasIndex("ConfigurationCropId")
-                        .IsUnique()
-                        .HasFilter("[ConfigurationCropId] IS NOT NULL");
-
-                    b.ToTable("Temperatures");
+            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Climate", b =>
+                {
+                    b.HasOne("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "ConfigurationCrop")
+                        .WithMany("Climates")
+                        .HasForeignKey("ConfigurationCropId");
                 });
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.ConfigurationCrop", b =>
@@ -117,13 +140,6 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                     b.HasOne("Cafe.Configuration.Domain.Entities.CoffeeGrower", "CoffeeGrower")
                         .WithMany("Crops")
                         .HasForeignKey("CoffeeGrowerId");
-                });
-
-            modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Temperature", b =>
-                {
-                    b.HasOne("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "ConfigurationCrop")
-                        .WithOne("Temperature")
-                        .HasForeignKey("Cafe.Configuration.Domain.Entities.Temperature", "ConfigurationCropId");
                 });
 #pragma warning restore 612, 618
         }

@@ -70,5 +70,16 @@ namespace Cafe.Configuration.Domain.Ports
             Expression<Func<T, object>> expressionNested, Expression<Func<T, bool>> expressionConditional,
             CancellationToken cancellationToken) where T : EntityBase;
 
+        /// <summary>
+        /// obtener un obteto con varios objetos anidados
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cancellationToken"></param>
+        /// <param name="expressionConditional"></param>
+        /// <param name="expressionsNested"></param>
+        /// <returns></returns>
+        public Task<T> GetWithNestedObjects<T>(CancellationToken cancellationToken, Expression<Func<T, bool>> expressionConditional,
+            params Expression<Func<T, object>>[] expressionsNested) where T : EntityBase;
+
     }
 }

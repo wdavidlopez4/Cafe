@@ -13,8 +13,8 @@ namespace Cafe.Configuration.Domain.Entities
 
         public double MinimumEffectiveGrade { get; private set; }
 
-        internal Temperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
-            double MaximunThresholdInsectDevelioment, double MinimumEffectiveGrade) : base(ConfigurationCropId)
+        internal Temperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment, double MaximunThresholdInsectDevelioment, 
+            double MinimumEffectiveGrade, ConfigurationCrop configurationCrop = null) : base(ConfigurationCropId, configurationCrop)
         {
             this.MaximunThresholdInsectDevelioment = MaximunThresholdInsectDevelioment;
             this.MinimumThresholdInsectDevelopment = MinimumThresholdInsectDevelopment;

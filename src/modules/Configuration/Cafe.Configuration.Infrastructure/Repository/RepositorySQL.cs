@@ -117,5 +117,15 @@ namespace Cafe.Configuration.Infrastructure.Repository
             }
         }
 
+        public async Task<T> GetWithNestedObjects<T>(CancellationToken cancellationToken, Expression<Func<T, bool>> expressionConditional,
+            params Expression<Func<T, object>>[] expressionsNested) where T : EntityBase
+        {
+
+            var contextQuery = this.context as IQueryable<T>; // _dbSet = dbContext.Set<TEntity>()
+            var query = expressionsNested.Aggregate(contextQuery, (current, property) => current.Include(property));
+
+            return await query.AsNoTracking().FirstOrDefaultAsync(expressionConditional, cancellationToken);
+        }
+
     }
 }

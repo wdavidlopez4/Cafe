@@ -19,11 +19,8 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 
         public IAutoMapping autoMapping;
 
-        public IUserSecurity userSecurity;
-
-        public TemperatureSetUpHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping, IUserSecurity userSecurity)
+        public TemperatureSetUpHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping)
         {
-            this.userSecurity = userSecurity;
             this.factory = factory;
             this.autoMapping = autoMapping;
             this.repository = repository;
@@ -42,10 +39,10 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 
 
             //obtenermos el cultivo y verificamos
-            string configurationCropId = null;
-            var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop, cancellationToken);
+            var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop.Temperature, cancellationToken);
+            var configurationCrop = crop.ConfigurationCrop;
 
-            if(crop == null)
+            if (crop == null)
             {
                 throw new Exception("segun el id del cultivo suministrado NO EXISTE el cultivo");
             }
@@ -53,18 +50,18 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             {
                 throw new Exception("el cultipo del caficultor no corresponde al token del caficultor.");
             }
-            else if(crop.ConfigurationCrop == null)
+            else if(configurationCrop == null)
             {
-                configurationCropId = this.factory.CreateConfigurationCrop(crop.Id).Id;
+                configurationCrop = (ConfigurationCrop) this.factory.CreateConfigurationCrop(crop.Id);
             }
-            else if(crop.Id != null)
+            else if(this.repository.Exists<Temperature>(x => x.Id == configurationCrop.Temperature.Id) == true)
             {
-                configurationCropId = crop.ConfigurationCropId;
+                throw new Exception("el cultivo ya tiene una configuracion de temperatura creada.");
             }
 
             //creamos, guardamos, mapeamos y retornamos la temperatura configuracion
-            var temperature = (Temperature) this.factory.CreateTemperature(configurationCropId, 
-                request.MaximunThresholdInsectDevelioment, request.MaximunThresholdInsectDevelioment, request.MinimumEffectiveGrade);
+            var temperature = (Temperature) this.factory.CreateTemperature(configurationCrop.Id, request.MaximunThresholdInsectDevelioment, 
+                request.MaximunThresholdInsectDevelioment, request.MinimumEffectiveGrade, configurationCrop);
 
             return this.autoMapping.Map<Temperature, TemperatureSetUpDTO>(await this.repository.Save<Temperature>(temperature, cancellationToken));
         }

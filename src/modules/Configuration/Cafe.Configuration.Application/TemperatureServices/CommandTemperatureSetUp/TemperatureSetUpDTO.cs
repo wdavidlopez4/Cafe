@@ -7,14 +7,14 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 {
     public class TemperatureSetUpDTO
     {
-        public double MinimumThresholdInsectDevelopment { get; private set; }
+        public double MinimumThresholdInsectDevelopment { get; set; }
 
-        public double MaximunThresholdInsectDevelioment { get; private set; }
+        public double MaximunThresholdInsectDevelioment { get; set; }
 
-        public double MinimumEffectiveGrade { get; private set; }
+        public double MinimumEffectiveGrade { get; set; }
 
-        public string ConfigurationCropId { get; private set; }
+        public string ConfigurationCropId { get; set; }
 
-        public ConfigurationCrop ConfigurationCrop { get; private set; }
+        public ConfigurationCrop ConfigurationCrop { get; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Cafe.Configuration.Domain.Entities
@@ -10,9 +12,10 @@ namespace Cafe.Configuration.Domain.Entities
 
         public ConfigurationCrop ConfigurationCrop { get; private set; }
 
-        protected Climate(string ConfigurationCropId)
+        protected Climate(string configurationCropId, ConfigurationCrop configurationCrop = null)
         {
-            this.ConfigurationCropId = ConfigurationCropId;
+            this.ConfigurationCropId = configurationCropId;
+            this.ConfigurationCrop = configurationCrop;
         }
 
         protected Climate()

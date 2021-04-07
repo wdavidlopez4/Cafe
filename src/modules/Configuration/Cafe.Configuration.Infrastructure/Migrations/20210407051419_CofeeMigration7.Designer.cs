@@ -3,14 +3,16 @@ using Cafe.Configuration.Infrastructure.EFcore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cafe.Configuration.Infrastructure.Migrations
 {
     [DbContext(typeof(CoffeeContext))]
-    partial class CoffeeContextModelSnapshot : ModelSnapshot
+    [Migration("20210407051419_CofeeMigration7")]
+    partial class CofeeMigration7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +50,9 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TemperatureId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CropId");
 
                     b.ToTable("ConfigurationCrops");
@@ -79,11 +84,11 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Temperature", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ConfigurationCropId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("MaximunThresholdInsectDevelioment")
                         .HasColumnType("float");
@@ -94,11 +99,7 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                     b.Property<double>("MinimumThresholdInsectDevelopment")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConfigurationCropId")
-                        .IsUnique()
-                        .HasFilter("[ConfigurationCropId] IS NOT NULL");
+                    b.HasKey("ConfigurationCropId");
 
                     b.ToTable("Temperatures");
                 });
@@ -123,7 +124,9 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                 {
                     b.HasOne("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "ConfigurationCrop")
                         .WithOne("Temperature")
-                        .HasForeignKey("Cafe.Configuration.Domain.Entities.Temperature", "ConfigurationCropId");
+                        .HasForeignKey("Cafe.Configuration.Domain.Entities.Temperature", "ConfigurationCropId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -15,14 +15,12 @@ namespace Cafe.Configuration.Domain.Entities
 
         public Crop Crop { get; private set; }
 
-        public string ClimateId { get; private set; }
+        public Temperature Temperature { get; private set; }
 
-        public List<Climate> Climates { get; private set; }
-
-        internal ConfigurationCrop(string cropId, List<Climate> climates = null)
+        internal ConfigurationCrop(string cropId, Temperature temperature = null)
         {
             this.CropId = cropId;
-            this.Climates = climates;
+            this.Temperature = temperature;
 
             if (Validator.Validate<ConfigurationCrop>(this, ConfigurationCropValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
