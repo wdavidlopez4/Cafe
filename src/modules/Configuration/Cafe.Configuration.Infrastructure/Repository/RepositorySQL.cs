@@ -82,7 +82,7 @@ namespace Cafe.Configuration.Infrastructure.Repository
             }
         }
 
-        public async Task<T> GetWithObjetc<T>(Expression<Func<T, bool>> expressionConditional,
+        public async Task<T> GetWithNestedObject<T>(Expression<Func<T, bool>> expressionConditional,
             Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase
         {
             try
@@ -116,5 +116,6 @@ namespace Cafe.Configuration.Infrastructure.Repository
                 throw new Exception($"no se pudo actualizr  la entidad {e.Message}");
             }
         }
+
     }
 }

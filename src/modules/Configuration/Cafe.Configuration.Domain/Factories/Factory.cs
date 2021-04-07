@@ -18,9 +18,9 @@ namespace Cafe.Configuration.Domain.Factories
             return new Crop(name, dayFormation, coffeeGrowerId, configurationCropId);
         }
 
-        public EntityBase CreateConfigurationCrop(string cropId, string climateId = null)
+        public EntityBase CreateConfigurationCrop(string cropId, List<Climate> climates = null)
         {
-            return new ConfigurationCrop(cropId, climateId);
+            return new ConfigurationCrop(cropId, climates);
         }
 
         public EntityBase CreateTemperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
