@@ -10,7 +10,6 @@ namespace Cafe.Configuration.Domain.Entities
 {
     public class ConfigurationCrop : EntityBase
     {
-        [Key, ForeignKey("Crop")]
         public string CropId { get; private set; }
 
         public Crop Crop { get; private set; }

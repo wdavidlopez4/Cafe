@@ -9,7 +9,7 @@ namespace Cafe.Configuration.Domain.Factories
     {
         public EntityBase CreateCoffeeGrower(string name, string mail, string password, string token, List<Crop> crops = null, Guid? id = null);
 
-        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId, string configurationCropId = null);
+        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId);
 
         public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null);
 

@@ -13,9 +13,9 @@ namespace Cafe.Configuration.Domain.Factories
             return new CoffeeGrower(name, mail, password, token, crops, id);
         }
 
-        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId, string configurationCropId = null)
+        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId)
         {
-            return new Crop(name, dayFormation, coffeeGrowerId, configurationCropId);
+            return new Crop(name, dayFormation, coffeeGrowerId);
         }
 
         public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null)
