@@ -1,6 +1,7 @@
 ﻿using Cafe.Configuration.Application.CropServices.CommandCropCreate;
 using Cafe.Configuration.Application.CropServices.QueryCropById;
 using Cafe.Configuration.Application.CropServices.QueryCropByPage;
+using Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -88,11 +89,18 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpPost]
         [Route("Temperatura")]
-        public async Task<IActionResult> ConfigurarTemperatura(string idCultivo, double minimoUmbralDesarrolloInsecto, 
-            double maximoUmbralDesarrolloInsepto, double gradoMinimoEfectivo)
+        public async Task<IActionResult> ConfigurarTemperatura([FromBody] TemperatureSetUp temperatureSetUp)
         {
-            return await Task.FromResult(Ok($"cultivo creado: {idCultivo} {minimoUmbralDesarrolloInsecto} " +
-                $"{maximoUmbralDesarrolloInsepto} {gradoMinimoEfectivo}"));
+            if (temperatureSetUp == null)
+                return BadRequest("el modelo es incorrecto.");
+
+            temperatureSetUp.Claims = User.Claims.ToList();
+
+            var dto = await this.mediator.Send(temperatureSetUp);
+            if (dto == null)
+                return BadRequest("la restuesta para obtener la temperatura fue nula");
+            else
+                return Ok(dto);
         }
 
         /// <summary>
