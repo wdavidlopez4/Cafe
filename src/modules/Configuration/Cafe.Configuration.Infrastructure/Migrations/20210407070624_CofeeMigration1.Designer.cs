@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cafe.Configuration.Infrastructure.Migrations
 {
     [DbContext(typeof(CoffeeContext))]
-    [Migration("20210407060841_CofeeMigration10")]
-    partial class CofeeMigration10
+    [Migration("20210407070624_CofeeMigration1")]
+    partial class CofeeMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,13 +44,17 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.ConfigurationCrop", b =>
                 {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CropId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("CropId");
+                    b.HasIndex("CropId")
+                        .IsUnique()
+                        .HasFilter("[CropId] IS NOT NULL");
 
                     b.ToTable("ConfigurationCrops");
                 });
@@ -62,9 +66,6 @@ namespace Cafe.Configuration.Infrastructure.Migrations
 
                     b.Property<string>("CoffeeGrowerId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConfigurationCropId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DayFormation")
                         .HasColumnType("int");
@@ -109,9 +110,7 @@ namespace Cafe.Configuration.Infrastructure.Migrations
                 {
                     b.HasOne("Cafe.Configuration.Domain.Entities.Crop", "Crop")
                         .WithOne("ConfigurationCrop")
-                        .HasForeignKey("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "CropId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Cafe.Configuration.Domain.Entities.ConfigurationCrop", "CropId");
                 });
 
             modelBuilder.Entity("Cafe.Configuration.Domain.Entities.Crop", b =>
