@@ -29,7 +29,7 @@ namespace Cafe.Configuration.Domain.Entities
                 throw new ArgumentException("la entidad se valido como erronea.");
         }
 
-        private CoffeeGrower()
+        private CoffeeGrower(): base()
         {
             //for IF
         }

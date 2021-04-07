@@ -17,5 +17,17 @@ namespace Cafe.Configuration.Domain.Factories
         {
             return new Crop(name, dayFormation, coffeeGrowerId, configurationCropId);
         }
+
+        public EntityBase CreateConfigurationCrop(string cropId, string climateId = null)
+        {
+            return new ConfigurationCrop(cropId, climateId);
+        }
+
+        public EntityBase CreateTemperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
+            double MaximunThresholdInsectDevelioment, double MinimumEffectiveGrade)
+        {
+            return new Temperature(ConfigurationCropId, MinimumThresholdInsectDevelopment,
+                MaximunThresholdInsectDevelioment, MinimumEffectiveGrade);
+        }
     }
 }
