@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp;
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
 using Cafe.Configuration.Application.CropServices.CommandCropCreate;
@@ -22,6 +23,7 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<Crop, CropByIdDTO>();
             this.CreateMap<Crop, CropByPageDTO>();
             this.CreateMap<Temperature, TemperatureSetUpDTO>();
+            this.CreateMap<Arduino, ArduinoSetUpDTO>();
         }
     }
 }
