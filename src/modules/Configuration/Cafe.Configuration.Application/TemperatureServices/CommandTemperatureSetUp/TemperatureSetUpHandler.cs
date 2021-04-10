@@ -12,6 +12,12 @@ using System.Threading.Tasks;
 
 namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp
 {
+    /// <summary>
+    /// importante: si no existe la configuracion se debera crear y tambien la temperatura
+    /// si existe la configuracion pero no la temperatura, entonces, se debera crear la temperatura y asignarle esa configuracion
+    /// no puede existir la temperatura sin consiguracion 
+    /// si puede exister la configuracion sin temperatura
+    /// </summary>
     public class TemperatureSetUpHandler : IRequestHandler<TemperatureSetUp, TemperatureSetUpDTO>
     {
         public IRepository repository;
@@ -42,6 +48,7 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             //obtenermos el cultivo y verificamos
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop.Temperature, cancellationToken);
             var configurationCrop = crop.ConfigurationCrop;
+            var temperature = crop.ConfigurationCrop.Temperature;
 
             if (crop == null)
             {
@@ -55,15 +62,21 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             {
                 configurationCrop = (ConfigurationCrop) this.factory.CreateConfigurationCrop(crop.Id);
             }
+
+            if(temperature == null)
+            {
+                temperature = (Temperature)this.factory.CreateTemperature(configurationCrop.Id, 
+                    request.MinimumThresholdInsectDevelopment, 
+                    request.MaximunThresholdInsectDevelioment, 
+                    request.MinimumEffectiveGrade, 
+                    configurationCrop);
+            }
             else if(this.repository.Exists<Temperature>(x => x.Id == configurationCrop.Temperature.Id) == true)
             {
                 throw new DuplicityEntityException("el cultivo ya tiene una configuracion de temperatura creada.");
             }
 
-            //creamos, guardamos, mapeamos y retornamos la temperatura configuracion
-            var temperature = (Temperature) this.factory.CreateTemperature(configurationCrop.Id, request.MinimumThresholdInsectDevelopment, 
-                request.MaximunThresholdInsectDevelioment, request.MinimumEffectiveGrade, configurationCrop);
-
+            //guardamos, mapeamos y retornamos la temperatura configuracion
             return this.autoMapping.Map<Temperature, TemperatureSetUpDTO>(await this.repository.Save<Temperature>(temperature, cancellationToken));
         }
     }

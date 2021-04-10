@@ -11,9 +11,11 @@ namespace Cafe.Configuration.Domain.Factories
 
         public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId);
 
-        public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null);
+        public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null, Arduino arduino = null);
 
         public EntityBase CreateTemperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
             double MaximunThresholdInsectDevelioment, double MinimumEffectiveGrade, ConfigurationCrop configurationCrop = null);
+
+        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null);
     }
 }
