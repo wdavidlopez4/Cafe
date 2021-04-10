@@ -48,8 +48,14 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
 
             //obtenemos el cultivo y verificamos
             var crop = await repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop.Arduino, cancellationToken);
+            if (crop == null)
+                throw new EntityNullException("no se pudo recuperar el cultivo con el id proporcianado.");
+
+            //tanto la configuracion del cultivo como el arduino pueden ser nulos ya que, puede ser que no se hallan creado anteriormente
+            //por eso en necesario el operador ?, ya que si la configuracion es nula y trata de obtener el arduino de esa configuracion
+            //lanzara una exepcion de que no se puede obtener un objeto de nulo
             ConfigurationCrop configurationCrop = crop.ConfigurationCrop;
-            Arduino arduino = configurationCrop.Arduino;
+            Arduino arduino = configurationCrop?.Arduino;
 
             if (crop == null)
             {
