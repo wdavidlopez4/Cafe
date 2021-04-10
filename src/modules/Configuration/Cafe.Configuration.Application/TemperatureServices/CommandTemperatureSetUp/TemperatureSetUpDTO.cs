@@ -17,6 +17,13 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 
         public string ConfigurationCropId { get; set; }
 
-        public ConfigurationCrop ConfigurationCrop { get; }
+        public ConfigurationCropDTO ConfigurationCrop { get; set; }
+
+        public class ConfigurationCropDTO
+        {
+            public string Id { get; set; }
+
+            public string CropId { get; set; }
+        }
     }
 }

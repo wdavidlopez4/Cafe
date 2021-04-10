@@ -124,7 +124,7 @@ namespace Cafe.Configuration.Infrastructure.Repository
 
             try
             {
-                var contextQuery = this.context as IQueryable<T>; // _dbSet = dbContext.Set<TEntity>()
+                var contextQuery = this.context.Set<T>() as IQueryable<T>; // _dbSet = dbContext.Set<TEntity>()
                 var query = expressionsNested.Aggregate(contextQuery, (current, property) => current.Include(property));
 
                 return await query.AsNoTracking().FirstOrDefaultAsync(expressionConditional, cancellationToken);
