@@ -16,7 +16,9 @@ namespace Cafe.Configuration.Domain.Entities
 
         public Temperature Temperature { get; private set; }
 
-        internal ConfigurationCrop(string cropId, Temperature temperature = null)
+        public Arduino Arduino { get; private set; }
+
+        internal ConfigurationCrop(string cropId, Temperature temperature = null, Arduino arduino = null)
         {
             this.CropId = cropId;
             this.Temperature = temperature;

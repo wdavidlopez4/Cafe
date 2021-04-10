@@ -18,9 +18,9 @@ namespace Cafe.Configuration.Domain.Factories
             return new Crop(name, dayFormation, coffeeGrowerId);
         }
 
-        public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null)
+        public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null, Arduino arduino = null)
         {
-            return new ConfigurationCrop(cropId, temperature);
+            return new ConfigurationCrop(cropId, temperature, arduino);
         }
 
         public EntityBase CreateTemperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
@@ -28,6 +28,11 @@ namespace Cafe.Configuration.Domain.Factories
         {
             return new Temperature(ConfigurationCropId, MinimumThresholdInsectDevelopment,
                 MaximunThresholdInsectDevelioment, MinimumEffectiveGrade, configurationCrop);
+        }
+
+        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null)
+        {
+            return new Arduino(name, configurationCropId, configurationCrop);
         }
     }
 }
