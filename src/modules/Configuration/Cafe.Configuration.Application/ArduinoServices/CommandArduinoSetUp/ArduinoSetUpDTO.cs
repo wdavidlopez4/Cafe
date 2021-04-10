@@ -7,6 +7,8 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
 {
     public class ArduinoSetUpDTO
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string ConfigurationCropId { get; set; }

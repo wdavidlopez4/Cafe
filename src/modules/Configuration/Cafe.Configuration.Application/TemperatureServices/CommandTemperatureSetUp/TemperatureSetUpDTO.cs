@@ -7,6 +7,8 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 {
     public class TemperatureSetUpDTO
     {
+        public string Id { get; set; }
+
         public double MinimumThresholdInsectDevelopment { get; set; }
 
         public double MaximunThresholdInsectDevelioment { get; set; }

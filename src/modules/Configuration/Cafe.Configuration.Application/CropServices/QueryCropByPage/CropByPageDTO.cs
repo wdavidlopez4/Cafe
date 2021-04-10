@@ -7,6 +7,7 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropByPage
 {
     public class CropByPageDTO
     {
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public int DayFormation { get; set; }
