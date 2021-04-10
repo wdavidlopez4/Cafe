@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Domain.Entities;
+﻿using Cafe.Configuration.Application.Exceptions;
+using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Ports;
 using MediatR;
 using System;
@@ -35,6 +36,8 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropByPage
             //obtenemos los cultivos
             var crops = await this.repository.GetAllBy<Crop>(x => x.Name, request.PageNumber, request.PageSize,
                 x => x.CoffeeGrower,x => x.CoffeeGrowerId == coffeeGrowerIdPresent, cancellationToken);
+            if (crops == null)
+                throw new EntityNullException("la lista de cultivos nunca se creo.");
 
             //retornamos
             return this.autoMapping.Map<List<Crop>, List<CropByPageDTO>>(crops);

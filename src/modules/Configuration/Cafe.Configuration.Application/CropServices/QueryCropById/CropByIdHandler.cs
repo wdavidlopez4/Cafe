@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Domain.Entities;
+﻿using Cafe.Configuration.Application.Exceptions;
+using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Ports;
 using MediatR;
 using System;
@@ -33,19 +34,19 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropById
             //obtener el id del caficultor del token que me enviaron
             var coffeeGowerIdPresent =  request.Claims.Find(x=> x.Type == "CoffeeGrowerId").Value;
             if (coffeeGowerIdPresent == null)
-                throw new Exception("no se pudo recuperar el id del claim");
+                throw new TokenException("no se pudo recuperar el id del claim");
 
             //obtener el cultivo con el caficultor
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.Id, x => x.CoffeeGrower, cancellationToken);
             if(crop == null)
-                throw new Exception("no se pudo recuperar el cultivo con el id enviado.");
+                throw new EntityNullException("no se pudo recuperar el cultivo con el id enviado.");
 
             //descodificar el token del caficultor que se obtuvo para obtener el id del caficultor
             string CoffeeGrowerIdDb = this.userSecurity.GetClaim(crop.CoffeeGrower.Token, "CoffeeGrowerId");
 
             //comprar tanto el id del token que se envio con el token de la db y si es correcto enviar el cultivo
             if (CoffeeGrowerIdDb != coffeeGowerIdPresent)
-                throw new Exception("el id del caficultor no correcponde al id que se almaceno en clam del token");
+                throw new ArgumentDifferentException("el id del caficultor no correcponde al id que se almaceno en clam del token");
             return autoMapping.Map<Crop, CropByIdDTO>(crop);
         }
     }

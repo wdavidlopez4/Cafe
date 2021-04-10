@@ -1,5 +1,6 @@
 ﻿using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
+using Cafe.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace Cafe.Web.Api.Configuration
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(ExceptionManagerConfigurationFilter))]
     public class AccountController : ControllerBase
     {
         private readonly IMediator mediator;

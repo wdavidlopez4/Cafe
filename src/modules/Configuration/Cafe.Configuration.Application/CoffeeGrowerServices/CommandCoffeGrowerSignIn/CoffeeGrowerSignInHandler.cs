@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Domain.Entities;
+﻿using Cafe.Configuration.Application.Exceptions;
+using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
 using MediatR;
@@ -33,14 +34,16 @@ namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrower
             if (request == null)
                 throw new ArgumentNullException("es nulo el comando del caficultor");
             else if (this.repository.Exists<CoffeeGrower>(x => x.Mail == request.Mail))
-                throw new Exception("la cuenta de usuario ya existe");
+                throw new DuplicityEntityException("la cuenta de usuario ya existe");
 
             //creamos datos necesarios para el caficultor
             var id = Guid.NewGuid();
             var token = userSecurity.CreateToken(request.Mail, id, request.Name);
+            if(token == null)
+                throw new TokenException("no se pudo generar el token.");
             var encriptPassword = userSecurity.EncriptAndCheckPassword(request.Password);
-            if (token == null || encriptPassword == null)
-                throw new Exception("no se pudo generar el token o encriptar la contraseña.");
+            if (encriptPassword == null)
+                throw new EncriptException("no se pudo encriptar la contraseña.");
 
             //creamos la entidad
             var coffeeGrower = (CoffeeGrower)this.factory.CreateCoffeeGrower(name: request.Name, mail: request.Mail, 

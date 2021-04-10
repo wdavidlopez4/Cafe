@@ -61,6 +61,7 @@ namespace Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrower
             //fabricamos el new caficultor para luego actualizarlo y posteriormente maperar a un dto para luego retornarlo
             var newCoffeeGrower = (CoffeeGrower)this.factory.CreateCoffeeGrower(name: coffeeGrower.Name, 
                 mail: coffeeGrower.Mail, password: coffeeGrower.Password, token: newToken, id: Guid.Parse(coffeeGrower.Id));
+
             return autoMapping.Map<CoffeeGrower, CoffeGrowerLoginDTO>(await repository.Update<CoffeeGrower>(newCoffeeGrower, cancellationToken));
 
         }

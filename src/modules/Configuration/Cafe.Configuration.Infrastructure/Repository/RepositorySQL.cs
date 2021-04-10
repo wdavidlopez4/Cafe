@@ -1,6 +1,7 @@
 ﻿using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Ports;
 using Cafe.Configuration.Infrastructure.EFcore;
+using Cafe.Configuration.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ namespace Cafe.Configuration.Infrastructure.Repository
 
                 return entity.Entity;
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
-                throw new Exception($"{e.Message}");
+                throw new DbSQLException($"{e.Message}");
             }
         }
 
@@ -45,10 +46,10 @@ namespace Cafe.Configuration.Infrastructure.Repository
             {
                 return context.Set<T>().AsQueryable().Any(expression);
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
 
-                throw new Exception($"no se pudo verificiar si existe la entidad {e.Message}");
+                throw new DbSQLException($"no se pudo verificiar si existe la entidad {e.Message}");
             }
         }
 
@@ -58,10 +59,10 @@ namespace Cafe.Configuration.Infrastructure.Repository
             {
                 return await context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
 
-                throw new Exception($"no se pudo recuperar la entidad {e.Message}");
+                throw new DbSQLException($"no se pudo recuperar la entidad {e.Message}");
             }
         }
 
@@ -72,13 +73,13 @@ namespace Cafe.Configuration.Infrastructure.Repository
                 context.Entry(await context.Set<T>().FirstOrDefaultAsync(x => x.Id == obj.Id)).CurrentValues.SetValues(obj);
 
                 if (await context.SaveChangesAsync(cancellationToken) < 0)
-                    throw new Exception($"no se actualizo la entidad en la db: {obj.GetType()}");
+                    throw new DbSQLException($"no se actualizo la entidad en la db: {obj.GetType()}");
 
                 return await context.Set<T>().FirstOrDefaultAsync(x => x.Id == obj.Id);
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
-                throw new Exception($"no se pudo actualizr  la entidad {e.Message}");
+                throw new DbSQLException($"no se pudo actualizr  la entidad {e.Message}");
             }
         }
 
@@ -89,10 +90,10 @@ namespace Cafe.Configuration.Infrastructure.Repository
             {
                 return await context.Set<T>().Include(expressionNested).FirstOrDefaultAsync(expressionConditional, cancellationToken);
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
 
-                throw new Exception($"no se pudo recuperar la entidad {e.Message}");
+                throw new DbSQLException($"no se pudo recuperar la entidad {e.Message}");
             }
         }
 
@@ -111,9 +112,9 @@ namespace Cafe.Configuration.Infrastructure.Repository
                     .Take(pageSize)
                     .ToListAsync(cancellationToken);
             }
-            catch (Exception e)
+            catch (DbSQLException e)
             {
-                throw new Exception($"no se pudo actualizr  la entidad {e.Message}");
+                throw new DbSQLException($"no se pudo obtener el listado {e.Message}");
             }
         }
 
@@ -121,11 +122,20 @@ namespace Cafe.Configuration.Infrastructure.Repository
             params Expression<Func<T, object>>[] expressionsNested) where T : EntityBase
         {
 
-            var contextQuery = this.context as IQueryable<T>; // _dbSet = dbContext.Set<TEntity>()
-            var query = expressionsNested.Aggregate(contextQuery, (current, property) => current.Include(property));
+            try
+            {
+                var contextQuery = this.context as IQueryable<T>; // _dbSet = dbContext.Set<TEntity>()
+                var query = expressionsNested.Aggregate(contextQuery, (current, property) => current.Include(property));
 
-            return await query.AsNoTracking().FirstOrDefaultAsync(expressionConditional, cancellationToken);
+                return await query.AsNoTracking().FirstOrDefaultAsync(expressionConditional, cancellationToken);
+            }
+            catch (DbSQLException e)
+            {
+
+                throw new DbSQLException($"no se pudo getpener el objeto anidado: {e.Message}");
+            }
         }
+
 
     }
 }

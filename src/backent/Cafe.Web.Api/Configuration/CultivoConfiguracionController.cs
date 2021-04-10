@@ -2,6 +2,7 @@
 using Cafe.Configuration.Application.CropServices.QueryCropById;
 using Cafe.Configuration.Application.CropServices.QueryCropByPage;
 using Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp;
+using Cafe.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,7 @@ namespace Cafe.Web.Api.Configuration
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(ExceptionManagerConfigurationFilter))]
     public class CultivoConfiguracionController : ControllerBase
     {
         private readonly IMediator mediator;
