@@ -107,17 +107,6 @@ namespace Cafe.Web.Api.Configuration
                 return Ok(dto);
         }
 
-        /// <summary>
-        /// identifica el arduino, esta api es para el arduino
-        /// </summary>
-        /// <param name="IdCultivo"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("Identificador")]
-        public async Task<IActionResult> IdentificarArduino(string idArduino)
-        {
-            return await Task.FromResult(Ok($"cultivo creado: {idArduino}"));
-        }
 
         /// <summary>
         /// comienza a monitorear el cultivo, tener en cuenta que si la brocaDetectada es true no hay necesidad de subir inmagen
