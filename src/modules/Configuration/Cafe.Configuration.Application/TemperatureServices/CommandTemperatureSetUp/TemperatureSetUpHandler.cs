@@ -47,8 +47,14 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 
             //obtenermos el cultivo y verificamos
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop.Temperature, cancellationToken);
+            if (crop == null)
+                throw new EntityNullException("no se pudo obtener el cultivo con el id envido.");
+
+            //puede ser que tanto la configuracion como el arduno sean nulos, ya que, anterirormente pudo haberse creado un cultivo sin estos
+            //por lo tanto, el error se presenta debido a que no se puede obtener una instancio de algo nulo, es decir, si la configuracion es nula y se trata de
+            //y al obtener el arduino, este arrojara una exepcion por eso es importante el operador (?)
             var configurationCrop = crop.ConfigurationCrop;
-            var temperature = crop.ConfigurationCrop.Temperature;
+            var temperature = crop.ConfigurationCrop?.Temperature;
 
             if (crop == null)
             {
