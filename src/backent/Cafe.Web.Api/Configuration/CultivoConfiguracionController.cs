@@ -74,6 +74,7 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpGet]
         [Route("cultivos")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> ObtenerCultivos([FromBody] CropByPage cropByPage)
         {
             if (cropByPage == null)
@@ -91,6 +92,7 @@ namespace Cafe.Web.Api.Configuration
 
         [HttpPost]
         [Route("Temperatura")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> ConfigurarTemperatura([FromBody] TemperatureSetUp temperatureSetUp)
         {
             if (temperatureSetUp == null)
