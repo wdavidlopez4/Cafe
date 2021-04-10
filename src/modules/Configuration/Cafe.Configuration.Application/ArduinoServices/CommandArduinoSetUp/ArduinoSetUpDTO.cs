@@ -7,12 +7,21 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
 {
     public class ArduinoSetUpDTO
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string ConfigurationCropId { get; set; }
 
         public bool Occupied { get; set; }
 
-        public ConfigurationCrop ConfigurationCrop { get; }
+        public ConfigurationCropDTO ConfigurationCrop { get; set; }
+
+        public class ConfigurationCropDTO
+        {
+            public string Id { get; set; }
+
+            public string CropId { get; set; }
+        }
     }
 }

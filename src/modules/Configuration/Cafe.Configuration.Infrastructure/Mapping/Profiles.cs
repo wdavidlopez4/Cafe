@@ -24,6 +24,11 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<Crop, CropByPageDTO>();
             this.CreateMap<Temperature, TemperatureSetUpDTO>();
             this.CreateMap<Arduino, ArduinoSetUpDTO>();
+            this.CreateMap<ConfigurationCrop, ArduinoSetUpDTO.ConfigurationCropDTO>();
+            this.CreateMap<CoffeeGrower, CropByIdDTO.CoffeeGrowerDTO>();
+            this.CreateMap<ConfigurationCrop, CropByIdDTO.ConfigurationCropDTO>();
+            this.CreateMap<CoffeeGrower, CropByPageDTO.CoffeeGrowerDTO>();
+            this.CreateMap<ConfigurationCrop, TemperatureSetUpDTO.ConfigurationCropDTO>();
         }
     }
 }

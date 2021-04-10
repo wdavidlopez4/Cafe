@@ -7,6 +7,8 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropById
 {
     public class CropByIdDTO
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public int DayFormation { get; set; }
@@ -15,8 +17,22 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropById
 
         public string CoffeeGrowerId { get; set; }
 
-        public CoffeeGrower CoffeeGrower { get; }
+        public CoffeeGrowerDTO CoffeeGrower { get; set; }
 
-        public ConfigurationCrop ConfigurationCrop { get; }
+        public ConfigurationCropDTO ConfigurationCrop { get; set; }
+
+        public class CoffeeGrowerDTO
+        {
+            public string Id { get; set; }
+
+            public string Name { get; set; }
+
+            public string Mail { get; set; }
+        }
+
+        public class ConfigurationCropDTO
+        {
+            public string Id { get; set; }
+        }
     }
 }

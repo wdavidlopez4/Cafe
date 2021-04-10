@@ -37,9 +37,15 @@ namespace Cafe.Configuration.Application.CropServices.QueryCropById
                 throw new TokenException("no se pudo recuperar el id del claim");
 
             //obtener el cultivo con el caficultor
-            var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.Id, x => x.CoffeeGrower, cancellationToken);
+            var crop = await this.repository.GetWithNestedObjects<Crop>(cancellationToken, 
+                x => x.Id == request.Id, 
+                x => x.CoffeeGrower,
+                x => x.ConfigurationCrop);
+
             if(crop == null)
                 throw new EntityNullException("no se pudo recuperar el cultivo con el id enviado.");
+            else if (crop.CoffeeGrower == null)
+                throw new EntityNullException("el usuario del cultivo no se pudo obtener");
 
             //descodificar el token del caficultor que se obtuvo para obtener el id del caficultor
             string CoffeeGrowerIdDb = this.userSecurity.GetClaim(crop.CoffeeGrower.Token, "CoffeeGrowerId");
