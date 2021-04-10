@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cafe.Configuration.Domain.Ports;
+using Cafe.Configuration.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             catch (Exception e)
             {
 
-                throw new Exception($"no se pudo mapear la entidad: {e.Message}");
+                throw new AutoMappingException($"no se pudo mapear la entidad: {e.Message}");
             }
         }
     }

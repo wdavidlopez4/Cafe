@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Domain.Entities;
+﻿using Cafe.Configuration.Application.Exceptions;
+using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
 using MediatR;
@@ -35,7 +36,7 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             var coffeeGrowerId = request.Claims.Find(x => x.Type == "CoffeeGrowerId").Value;
 
             if (this.repository.Exists<CoffeeGrower>(x => x.Id == coffeeGrowerId) == false)
-                throw new Exception("de acuerdo al token suministrado el caficultor no existe.");
+                throw new ArgumentDifferentException("de acuerdo al token suministrado el caficultor no existe.");
 
 
             //obtenermos el cultivo y verificamos
@@ -44,11 +45,11 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
 
             if (crop == null)
             {
-                throw new Exception("segun el id del cultivo suministrado NO EXISTE el cultivo");
+                throw new EntityNullException("segun el id del cultivo suministrado NO EXISTE el cultivo");
             }
             else if (crop.CoffeeGrowerId != coffeeGrowerId)
             {
-                throw new Exception("el cultipo del caficultor no corresponde al token del caficultor.");
+                throw new ArgumentDifferentException("el cultipo del caficultor no corresponde al token del caficultor.");
             }
             else if(configurationCrop == null)
             {
@@ -56,7 +57,7 @@ namespace Cafe.Configuration.Application.TemperatureServices.CommandTemperatureS
             }
             else if(this.repository.Exists<Temperature>(x => x.Id == configurationCrop.Temperature.Id) == true)
             {
-                throw new Exception("el cultivo ya tiene una configuracion de temperatura creada.");
+                throw new DuplicityEntityException("el cultivo ya tiene una configuracion de temperatura creada.");
             }
 
             //creamos, guardamos, mapeamos y retornamos la temperatura configuracion
