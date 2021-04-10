@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 
 namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
 {
+    /// <summary>
+    /// importante: si no existe la configuracion se debera crear y tambien el arduino
+    /// si existe la configuracion pero no el arduino, entonces, se debera crear el arduino y asignarle esa configuracion
+    /// no puede existir el arduno sin configuracion 
+    /// si puede exister la configuracion sin arduino
+    /// </summary>
     public class ArduinoSetUpHandler : IRequestHandler<ArduinoSetUp, ArduinoSetUpDTO>
     {
         private readonly IRepository repository;
@@ -43,14 +49,24 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
             //obtenemos el cultivo y verificamos
             var crop = await repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId, x => x.ConfigurationCrop.Arduino, cancellationToken);
             ConfigurationCrop configurationCrop = crop.ConfigurationCrop;
+            Arduino arduino = configurationCrop.Arduino;
 
             if (crop == null)
+            {
                 throw new EntityNullException("no se pudo recuperar el cultivo. verificar el id envido");
+            } 
             else if (crop.CoffeeGrowerId != coffeeGrowerId)
+            {
                 throw new ArgumentDifferentException("el id del caficultor no coincide con el id del caficultor que se envio en el toeken");
-            else if(crop.ConfigurationCrop == null)
+            }   
+            else if(configurationCrop == null)
             {
                 configurationCrop = (ConfigurationCrop) this.factory.CreateConfigurationCrop(crop.Id);
+            }
+            
+            if(arduino == null)
+            {
+                arduino = (Arduino)this.factory.CreateArduino(request.Name, configurationCrop.Id, configurationCrop); //resisar la asignacion de configurationCrop cuando ya existe
             }
             else if(this.repository.Exists<Arduino>(x => x.Id == crop.ConfigurationCrop.Arduino.Id) == true)
             {
@@ -58,9 +74,7 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp
             }
 
             //crear, guardar, mapear y retornar un arduino
-            var arduino = (Arduino) this.factory.CreateArduino(request.Name, configurationCrop.Id, configurationCrop); //resisar la asignacion de configurationCrop cuando ya existe
             return this.autoMapping.Map<Arduino, ArduinoSetUpDTO>(await this.repository.Save<Arduino>(arduino, cancellationToken));
-
         }
     }
 }
