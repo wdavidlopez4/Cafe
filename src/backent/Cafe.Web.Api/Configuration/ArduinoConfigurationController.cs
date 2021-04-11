@@ -1,4 +1,5 @@
 ﻿using Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp;
+using Cafe.Configuration.Application.ArduinoServices.CommandArduinoSyncUp;
 using Cafe.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,9 +61,22 @@ namespace Cafe.Web.Api.Configuration
         [HttpPost]
         [Route("Sincronizar")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> SincronozarArduino(string idArduino)
+        public async Task<IActionResult> SincronozarArduino([FromBody] ArduinoSyncUp arduinoSyncUpDTO)
         {
-            return Ok(await Task.FromResult(""));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            arduinoSyncUpDTO.Claims = claims;
+            var dto = await this.mediator.Send(arduinoSyncUpDTO);
+
+            if (dto == null)
+                return BadRequest("no se pudo crear el cultivo.");
+            else
+                return Ok(dto);
         }
     }
 }
