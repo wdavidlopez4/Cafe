@@ -27,9 +27,9 @@ namespace Cafe.Web.Api.Configuration
         }
 
         /// <summary>
-        /// identifica el arduino, esta api es para el arduino
+        /// configurar el arduino desde la UI
         /// </summary>
-        /// <param name="IdCultivo"></param>
+        /// <param name="arduinoSetUp"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("Arduino")]
@@ -50,6 +50,19 @@ namespace Cafe.Web.Api.Configuration
                 return BadRequest("no se pudo crear el cultivo.");
             else
                 return Ok(dto);
+        }
+
+        /// <summary>
+        /// sincronizar el arduino SOLO PARA EL ARDUINO
+        /// </summary>
+        /// <param name="idArduino"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Sincronizar")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> SincronozarArduino(string idArduino)
+        {
+            return Ok(await Task.FromResult(""));
         }
     }
 }
