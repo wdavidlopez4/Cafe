@@ -45,5 +45,24 @@ namespace Cafe.Web.Api.Configuration
             else
                 return Ok(dto);
         }
+
+        [HttpGet]
+        [Route("ConfigurationCampos")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ObtenerConfiguracion([Bind("CropId")]string cropId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            var dto = await this.mediator.Send(new SetUpByIdCrop{ CropId = cropId, Claims = claims});
+            if (dto == null)
+                return BadRequest("no se pudo obtener el cultivo");
+            else
+                return Ok(dto);
+        }
     }
 }

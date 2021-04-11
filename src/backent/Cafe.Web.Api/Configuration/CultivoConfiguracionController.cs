@@ -72,6 +72,31 @@ namespace Cafe.Web.Api.Configuration
                 return Ok(dto);
         }
 
+        /// <summary>
+        /// es una altrnativa al obtener el cultivo con json
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("cultivoCampos")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ObtenerCultivo([Bind("id")] string id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            var dto = await this.mediator.Send(new CropById { Id = id, Claims = claims});
+
+            if (dto == null)
+                return BadRequest("no se pudo obtener el cultivo");
+            else
+                return Ok(dto);
+        }
+
         [HttpGet]
         [Route("cultivos")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -88,6 +113,35 @@ namespace Cafe.Web.Api.Configuration
             else
                 return Ok(dto);
 
+        }
+
+        /// <summary>
+        /// api alternativa de cultivos, en ves de enviar json envia los campos
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("cultivosCampos")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ObtenerCultivos([Bind("pageNumber,pageSize")]int pageNumber, int pageSize)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            var dto = await this.mediator.Send(new CropByPage { 
+                PageNumber = pageNumber, 
+                PageSize = pageSize, 
+                Claims = claims });
+
+            if (dto == null)
+                return BadRequest("no se pudo obtener el cultivo");
+            else
+                return Ok(dto);
         }
 
         [HttpPost]
