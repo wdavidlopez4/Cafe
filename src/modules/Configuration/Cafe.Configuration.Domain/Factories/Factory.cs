@@ -30,9 +30,10 @@ namespace Cafe.Configuration.Domain.Factories
                 MaximunThresholdInsectDevelioment, MinimumEffectiveGrade, configurationCrop);
         }
 
-        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null)
+        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null, 
+            Guid? id = null, bool occupied = false)
         {
-            return new Arduino(name, configurationCropId, configurationCrop);
+            return new Arduino(name, configurationCropId, configurationCrop, id, occupied);
         }
     }
 }

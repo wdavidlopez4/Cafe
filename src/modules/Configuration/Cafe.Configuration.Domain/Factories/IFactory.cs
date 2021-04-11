@@ -16,6 +16,7 @@ namespace Cafe.Configuration.Domain.Factories
         public EntityBase CreateTemperature(string ConfigurationCropId, double MinimumThresholdInsectDevelopment,
             double MaximunThresholdInsectDevelioment, double MinimumEffectiveGrade, ConfigurationCrop configurationCrop = null);
 
-        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null);
+        public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null, 
+            Guid? id = null, bool occupied = false);
     }
 }

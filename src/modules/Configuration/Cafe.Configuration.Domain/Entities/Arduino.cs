@@ -15,12 +15,13 @@ namespace Cafe.Configuration.Domain.Entities
 
         public ConfigurationCrop ConfigurationCrop { get; private set; }
 
-        internal Arduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null)
+        internal Arduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null, 
+            Guid? id = null, bool occupied = false) : base(id)
         {
             this.Name = name;
             this.ConfigurationCropId = configurationCropId;
             this.ConfigurationCrop = configurationCrop;
-            this.Occupied = false;
+            this.Occupied = occupied;
 
             if (Validator.Validate<Arduino>(this, ArduinoValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
