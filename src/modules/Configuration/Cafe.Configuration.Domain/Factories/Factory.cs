@@ -13,9 +13,11 @@ namespace Cafe.Configuration.Domain.Factories
             return new CoffeeGrower(name, mail, password, token, crops, id);
         }
 
-        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId)
+        public EntityBase CreateCrop(string name, int dayFormation, string coffeeGrowerId, 
+            CoffeeGrower coffeeGrower = null, ConfigurationCrop configurationCrop = null,
+            Monitoring monitoring = null)
         {
-            return new Crop(name, dayFormation, coffeeGrowerId);
+            return new Crop(name, dayFormation, coffeeGrowerId, coffeeGrower, configurationCrop, monitoring);
         }
 
         public EntityBase CreateConfigurationCrop(string cropId, Temperature temperature = null, Arduino arduino = null)
@@ -34,6 +36,16 @@ namespace Cafe.Configuration.Domain.Factories
             Guid? id = null, bool occupied = false)
         {
             return new Arduino(name, configurationCropId, configurationCrop, id, occupied);
+        }
+
+        public EntityBase CreateMonitoring(string activateByImage, string cropId, Crop crop = null)
+        {
+            return new ImageMonitoring(activateByImage, cropId, crop);
+        }
+
+        public EntityBase CreateMonitoring(bool activateManually, string cropId, Crop crop = null)
+        {
+            return new ManualMonitoring(activateManually, cropId, crop);
         }
     }
 }

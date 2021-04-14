@@ -17,11 +17,18 @@ namespace Cafe.Configuration.Domain.Entities
 
         public ConfigurationCrop ConfigurationCrop { get; private set; }
 
-        internal Crop(string name, int DayFormation, string coffeeGrowerId) : base()
+        public Monitoring Monitoring { get; private set; }
+
+        internal Crop(string name, int DayFormation, string coffeeGrowerId, 
+            CoffeeGrower coffeeGrower = null, ConfigurationCrop configurationCrop = null,
+            Monitoring monitoring = null) : base()
         {
             this.Name = name;
             this.DayFormation = DayFormation;
             this.CoffeeGrowerId = coffeeGrowerId;
+            this.Monitoring = monitoring;
+            this.ConfigurationCrop = configurationCrop;
+            this.CoffeeGrower = coffeeGrower;
 
             if (Validator.Validate<Crop>(this, CropValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
