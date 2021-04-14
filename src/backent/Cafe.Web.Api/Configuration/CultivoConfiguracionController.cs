@@ -161,19 +161,5 @@ namespace Cafe.Web.Api.Configuration
                 return Ok(dto);
         }
 
-
-        /// <summary>
-        /// comienza a monitorear el cultivo, tener en cuenta que si la brocaDetectada es true no hay necesidad de subir inmagen
-        /// </summary>
-        /// <param name="idCultivo"></param>
-        /// <param name="brocaDetectadaResientemente"></param>
-        /// <param name="urlImagen"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("Monitor")]
-        public async Task<IActionResult> ComenzarMonitoreo(string idCultivo, bool brocaDetectadaResientemente, string urlImagenFrutoBrocado)
-        {
-            return await Task.FromResult(Ok($"comenzar: {idCultivo} {urlImagenFrutoBrocado} {brocaDetectadaResientemente}"));
-        }
     }
 }

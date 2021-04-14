@@ -64,5 +64,21 @@ namespace Cafe.Web.Api.Configuration
             else
                 return Ok(dto);
         }
+
+        [HttpPost]
+        [Route("MonitorManual")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ComenzarMonitoreo(string idCultivo, bool activarManual)
+        {
+            return await Task.FromResult(Ok($"comenzar: {idCultivo} {activarManual}"));
+        }
+
+        [HttpPost]
+        [Route("MonitorInteligente")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ComenzarMonitoreo(string idCultivo, string activarPorImagen)
+        {
+            return await Task.FromResult(Ok($"comenzar: {idCultivo} {activarPorImagen}"));
+        }
     }
 }
