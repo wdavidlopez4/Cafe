@@ -68,6 +68,16 @@ namespace Cafe.Web.Api.Filters
                 context.Result = new JsonResult($"parametos no validos: {this.webHostEnvironment.ApplicationName} " +
                     $"tipo exepcion: {context.Exception.GetType()} exepcion: {context.Exception.Message}");
             }
+            else if(context.Exception is MonitoringRunningException)
+            {
+                context.Result = new JsonResult($"Monitoreo no valido: {this.webHostEnvironment.ApplicationName} " +
+                    $"tipo exepcion: {context.Exception.GetType()} exepcion: {context.Exception.Message}");
+            }
+            else if(context.Exception is ArgumentIgualsException)
+            {
+                context.Result = new JsonResult($"parametos no validos: {this.webHostEnvironment.ApplicationName} " +
+                    $"tipo exepcion: {context.Exception.GetType()} exepcion: {context.Exception.Message}");
+            }
         }
     }
 }

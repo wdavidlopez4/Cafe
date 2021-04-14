@@ -16,6 +16,10 @@ namespace Cafe.Configuration.Infrastructure.EFcore
 
         public DbSet<Temperature> Temperatures { get; set; }
 
+        public DbSet<ImageMonitoring> ImageMonitorings { get; set; }
+
+        public DbSet<ManualMonitoring> ManualMonitorings { get; set; }
+
         
         public CoffeeContext(DbContextOptions options) : base(options)
         {

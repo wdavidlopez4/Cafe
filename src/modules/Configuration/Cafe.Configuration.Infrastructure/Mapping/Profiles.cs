@@ -6,6 +6,7 @@ using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSign
 using Cafe.Configuration.Application.CropServices.CommandCropCreate;
 using Cafe.Configuration.Application.CropServices.QueryCropById;
 using Cafe.Configuration.Application.CropServices.QueryCropByPage;
+using Cafe.Configuration.Application.MonitoringServices.CommandMonitoringManualBegin;
 using Cafe.Configuration.Application.SetUpServices.QuerySetUpByIdCrop;
 using Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp;
 using Cafe.Configuration.Domain.Entities;
@@ -36,6 +37,7 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<Temperature, SetUpByIdCropDTO.TemperatureDTO>();
             this.CreateMap<Arduino, SetUpByIdCropDTO.ArduinoDTO>();
             this.CreateMap<Arduino, ArduinoSyncUpDTO>();
+            this.CreateMap<ManualMonitoring, MonitoringManualBeginDTO>();
 
         }
     }
