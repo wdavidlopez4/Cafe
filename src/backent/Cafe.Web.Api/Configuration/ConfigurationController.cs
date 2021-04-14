@@ -1,4 +1,5 @@
-﻿using Cafe.Configuration.Application.SetUpServices.QuerySetUpByIdCrop;
+﻿using Cafe.Configuration.Application.MonitoringServices.CommandMonitoringManualBegin;
+using Cafe.Configuration.Application.SetUpServices.QuerySetUpByIdCrop;
 using Cafe.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -68,9 +69,22 @@ namespace Cafe.Web.Api.Configuration
         [HttpPost]
         [Route("MonitorManual")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> ComenzarMonitoreo(string idCultivo, bool activarManual)
+        public async Task<IActionResult> ComenzarMonitoreo([FromBody] MonitoringManualBegin monitoringManualBegin)
         {
-            return await Task.FromResult(Ok($"comenzar: {idCultivo} {activarManual}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            monitoringManualBegin.Claims = claims;
+            var dto = await this.mediator.Send(monitoringManualBegin);
+
+            if (dto == null)
+                return BadRequest("no se pudo obtener el cultivo");
+            else
+                return Ok(dto);
         }
 
         [HttpPost]
