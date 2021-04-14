@@ -9,8 +9,8 @@ namespace Cafe.Configuration.Domain.Validations
     {
         internal static readonly Predicate<ManualMonitoring>[] validation =
         {
-            (x) => x.Id != null && x.Id == "",
-            (x) => x.CropId != null && x.CropId == ""
+            (x) => x.Id != null && x.Id != "",
+            (x) => x.CropId != null && x.CropId != ""
         };
     }
 }

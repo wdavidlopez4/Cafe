@@ -38,7 +38,6 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<Arduino, SetUpByIdCropDTO.ArduinoDTO>();
             this.CreateMap<Arduino, ArduinoSyncUpDTO>();
             this.CreateMap<ManualMonitoring, MonitoringManualBeginDTO>();
-            this.CreateMap<Crop, MonitoringManualBeginDTO.CropDTO>();
 
         }
     }

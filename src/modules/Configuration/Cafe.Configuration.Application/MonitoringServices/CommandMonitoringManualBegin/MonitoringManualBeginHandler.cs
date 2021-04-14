@@ -44,10 +44,10 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringMan
             var crop = await CheckCrop(request.CropId, coffeeGrowerId, cancellationToken);
 
             //verificamos que la configuracion este lista para comenzar a monitoriar
-            await CkeckConfigurationCrop(crop.CoffeeGrowerId, cancellationToken);
+            await CkeckConfigurationCrop(crop.ConfigurationCrop.Id, cancellationToken);
 
             //creamos, guardamo y retornamos el monitoreo
-            var manual = (ManualMonitoring)this.factory.CreateMonitoring(request.ActivateManually, crop.Id, crop);
+            var manual = (ManualMonitoring)this.factory.CreateMonitoring(request.ActivateManually, crop.Id);
 
             return this.autoMapping.Map<ManualMonitoring, MonitoringManualBeginDTO>(
                 await this.repository.Save<ManualMonitoring>(manual, cancellationToken));

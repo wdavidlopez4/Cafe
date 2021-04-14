@@ -13,12 +13,14 @@ namespace Cafe.Configuration.Domain.Entities
             :base(cropId, crop)
         {
             this.ActivateManually = activateManually;
+            this.CropId = cropId;
+            this.Crop = crop;
 
             if(Validator.Validate<ManualMonitoring>(this, ManualMonitoringValidation.validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");
         }
 
-        private ManualMonitoring()
+        private ManualMonitoring():base()
         {
             //for EF
         }
