@@ -39,16 +39,15 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
             else if (! this.repository.Exists<CoffeeGrower>(x => x.Id == coffeeGrowerId))
                 throw new EntityNullException("el caficultor no se encontro con el token proporcionado");
 
+            else if (! IsBase64String(request.ActivateByImage))
+                throw new EncriptException("la url de la imagen no esta en base 64.");
+
 
             //verificamos el cultivo, que este listo para comenzar a monitorear
             var crop = await CheckCrop(request.CropId, coffeeGrowerId, cancellationToken);
 
             // verificar que la configuracion del cultivo este lista para comenzar a monitoriarse
             var configurationCrop = await this.CheckConfigurationCrop(crop.ConfigurationCrop.Id, cancellationToken);
-
-            //verificar la codificacion de la imagen
-            if (! IsBase64String(request.ActivateByImage))
-                throw new EncriptException("la url de la imagen no esta en base 64.");
 
             //crear, guardar, mapear y retornar el monitoreo
             var monitoring = (ImageMonitoring) this.factory.CreateMonitoring(request.ActivateByImage, false, crop.Id); //la activacion es falsa asta que la inteligencia procese la imagen y determine si esta brocado o no
@@ -103,7 +102,7 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
         /// <returns></returns>
         private async Task<ConfigurationCrop> CheckConfigurationCrop(string configurationCropid, CancellationToken cancellationToken)
         {
-            if(! this.repository.Exists<ConfigurationCrop>(x => x.CropId == configurationCropid))
+            if(! this.repository.Exists<ConfigurationCrop>(x => x.Id == configurationCropid))
                 throw new EntityNullException("el cultivo aun no tiene configuracion");
 
             var configuration = await this.repository.GetWithNestedObjects<ConfigurationCrop>(cancellationToken, 
