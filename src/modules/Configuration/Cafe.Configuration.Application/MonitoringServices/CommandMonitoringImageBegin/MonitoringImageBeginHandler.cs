@@ -51,7 +51,7 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
                 throw new EncriptException("la url de la imagen no esta en base 64.");
 
             //crear, guardar, mapear y retornar el monitoreo
-            var monitoring = (ImageMonitoring) this.factory.CreateMonitoring(request.ActivateByImage, true, crop.Id);
+            var monitoring = (ImageMonitoring) this.factory.CreateMonitoring(request.ActivateByImage, false, crop.Id); //la activacion es falsa asta que la inteligencia procese la imagen y determine si esta brocado o no
 
             return this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginDTO>(
                 await this.repository.Save<ImageMonitoring>(monitoring, cancellationToken));
