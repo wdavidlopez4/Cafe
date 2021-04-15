@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cafe.Configuration.Domain\Cafe.Configuration.Domain.csproj" />
+    <ProjectReference Include="..\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

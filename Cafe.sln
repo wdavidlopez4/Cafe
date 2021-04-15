@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Configuration.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Configuration.IntegrationEvents", "src\modules\Configuration\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj", "{95C83B64-5075-438C-9112-969CA3D858A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Intelligent.Domain", "src\modules\Intelligent\Cafe.Intelligent.Domain\Cafe.Intelligent.Domain.csproj", "{D1FB95A5-F216-4D58-8BFA-480702247C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Intelligent.Application", "src\modules\Intelligent\Cafe.Intelligent.Application\Cafe.Intelligent.Application.csproj", "{B104DB51-B7A7-4432-A4FE-CDCF427505EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{95C83B64-5075-438C-9112-969CA3D858A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95C83B64-5075-438C-9112-969CA3D858A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95C83B64-5075-438C-9112-969CA3D858A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +80,8 @@ Global
 		{97C288EA-5E3A-4E1C-9C76-E16A0FFDEA14} = {85017B89-4135-4170-8925-2841DB74D12B}
 		{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1} = {85017B89-4135-4170-8925-2841DB74D12B}
 		{95C83B64-5075-438C-9112-969CA3D858A0} = {85017B89-4135-4170-8925-2841DB74D12B}
+		{D1FB95A5-F216-4D58-8BFA-480702247C91} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {336F55AE-D96C-4E08-9C86-5A6BF03B8A55}

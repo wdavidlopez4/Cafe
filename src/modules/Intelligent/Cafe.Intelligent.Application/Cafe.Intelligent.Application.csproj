@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JKang.EventBus" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Cafe.Intelligent.Domain\Cafe.Intelligent.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

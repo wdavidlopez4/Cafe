@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\modules\Configuration\Cafe.Configuration.Application\Cafe.Configuration.Application.csproj" />
     <ProjectReference Include="..\..\modules\Configuration\Cafe.Configuration.Infrastructure\Cafe.Configuration.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Intelligent\Cafe.Intelligent.Application\Cafe.Intelligent.Application.csproj" />
   </ItemGroup>
 
 

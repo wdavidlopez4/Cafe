@@ -2,6 +2,7 @@
 using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
+using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
 using JKang.EventBus;
 using MediatR;
 using System;
@@ -60,9 +61,10 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
             monitoring = await this.repository.Save<ImageMonitoring>(monitoring, cancellationToken);
 
             //publicar el monitoreo
-            await this.eventPublisher.PublishEventAsync(monitoring);
+            var monitoringEvent = this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginEvent>(monitoring);
+            await this.eventPublisher.PublishEventAsync(monitoringEvent);
 
-            //mapear el monitoro
+            //mapear el monitoreo guardado y retorna
             return this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginDTO>(monitoring);
         }
 
