@@ -9,10 +9,14 @@ namespace Cafe.Configuration.Domain.Entities
     {
         public string ActivateByImage { get; private set; }
 
-        internal ImageMonitoring(string activateByImage, string cropId, Crop crop = null)
+        public bool Activated { get; private set; }
+
+        internal ImageMonitoring(string activateByImage, bool activated, string cropId, Crop crop = null)
             :base(cropId, crop)
         {
             this.ActivateByImage = activateByImage;
+            this.Activated = activated;
+            this.CropId = cropId;
 
             if(Validator.Validate<ImageMonitoring>(this, ImageMonitoringValidation.Validation) == false)
                 throw new ArgumentException("la entidad se valido como erronea.");

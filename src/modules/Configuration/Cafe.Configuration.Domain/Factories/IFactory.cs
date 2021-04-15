@@ -21,7 +21,7 @@ namespace Cafe.Configuration.Domain.Factories
         public EntityBase CreateArduino(string name, string configurationCropId, ConfigurationCrop configurationCrop = null, 
             Guid? id = null, bool occupied = false);
 
-        public EntityBase CreateMonitoring(string activateByImage, string cropId, Crop crop = null);
+        public EntityBase CreateMonitoring(string activateByImage, bool activated, string cropId, Crop crop = null);
 
         public EntityBase CreateMonitoring(bool activateManually, string cropId, Crop crop = null);
     }

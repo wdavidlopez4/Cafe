@@ -38,9 +38,9 @@ namespace Cafe.Configuration.Domain.Factories
             return new Arduino(name, configurationCropId, configurationCrop, id, occupied);
         }
 
-        public EntityBase CreateMonitoring(string activateByImage, string cropId, Crop crop = null)
+        public EntityBase CreateMonitoring(string activateByImage, bool activated, string cropId, Crop crop = null)
         {
-            return new ImageMonitoring(activateByImage, cropId, crop);
+            return new ImageMonitoring(activateByImage, activated, cropId, crop);
         }
 
         public EntityBase CreateMonitoring(bool activateManually, string cropId, Crop crop = null)
