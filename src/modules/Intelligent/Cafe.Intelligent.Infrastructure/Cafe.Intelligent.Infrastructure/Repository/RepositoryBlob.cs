@@ -35,7 +35,7 @@ namespace Cafe.Intelligent.Infrastructure.Repository
             return items;
         }
 
-        public async Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageData
+        public async Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageDataModel
         {
             var container = this.blobServiceClient.GetBlobContainerClient(nameBlobContainer);
             var entities = new List<T>();

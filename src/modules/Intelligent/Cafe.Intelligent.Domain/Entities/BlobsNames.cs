@@ -6,8 +6,8 @@ namespace Cafe.Intelligent.Domain.Entities
 {
     public static class BlobsNames
     {
-        public const string Brocado = "brocado";
+        public const string Brocado = "cbc";
 
-        public const string Sano = "sano";
+        public const string Sano = "sbc";
     }
 }

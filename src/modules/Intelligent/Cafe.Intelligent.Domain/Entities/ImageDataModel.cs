@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cafe.Intelligent.Domain.Entities
 {
-    public class ImageData : EntityBase
+    public class ImageDataModel : EntityBase
     {
         /// <summary>
         /// ruta donde se almacenan las imagenes

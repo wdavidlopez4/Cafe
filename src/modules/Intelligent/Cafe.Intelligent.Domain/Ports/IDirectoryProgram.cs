@@ -13,7 +13,7 @@ namespace Cafe.Intelligent.Domain.Ports
 
         public string CreateDirectory(string projectRootUrl, string directoryUrl, string nameDirectoryRoot);
 
-        public IEnumerable<ImageData> LoadImagesFromDirectory(string folder, bool useFolderNameAsLabel = true);
+        public IEnumerable<ImageDataModel> LoadImagesFromDirectory(string folder, bool useFolderNameAsLabel = true);
     }
 
 }

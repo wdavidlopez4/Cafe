@@ -13,42 +13,29 @@ namespace Cafe.Intelligent.Application.ML
     public class MLFit
     {
 
-        private readonly IDirectoryProgram directoryProgram;
-
-        private readonly IRepositoryBlob repositoryBlob;
-
-        private readonly MLContext mLContext;
-
-        public MLFit(IDirectoryProgram directoryProgram, IRepositoryBlob repositoryBlob)
-        {
-            this.directoryProgram = directoryProgram;
-            this.repositoryBlob = repositoryBlob;
-
-            //asociacion de composicion con el ML
-            mLContext = new MLContext();
-        }
+        private static MLContext mLContext = new MLContext();
 
         /// <summary>
         /// preparar los datos antes de entrenar la IA
         /// </summary>
         /// <returns></returns>
-        internal async Task<IDataView> PrepareData()
+        internal static async Task<IDataView> PrepareData(IDirectoryProgram directoryProgram, IRepositoryBlob repositoryBlob)
         {
             //definir rutas
-            var projectDirectory = this.directoryProgram.GetProjectDirectory();
-            var assentPath = this.directoryProgram.CreateDirectory(projectDirectory, "assent");
-            var workSpaceRelativePath = this.directoryProgram.CreateDirectory(projectDirectory, "workspace");
+            var projectDirectory = directoryProgram.GetProjectDirectory();
+            var assentPath = directoryProgram.CreateDirectory(projectDirectory, "assent");
+            var workSpaceRelativePath = directoryProgram.CreateDirectory(projectDirectory, "workspace");
 
-            var brocadoPath = this.directoryProgram.CreateDirectory(projectDirectory, assentPath, BlobsNames.Brocado);
-            var sanoPath = this.directoryProgram.CreateDirectory(projectDirectory, assentPath, BlobsNames.Sano);
+            var brocadoPath = directoryProgram.CreateDirectory(projectDirectory, assentPath, BlobsNames.Brocado);
+            var sanoPath = directoryProgram.CreateDirectory(projectDirectory, assentPath, BlobsNames.Sano);
 
             //descargar blobs en rutas
-            await this.repositoryBlob.DowloadBlobs(brocadoPath, BlobsNames.Brocado);
-            await this.repositoryBlob.DowloadBlobs(sanoPath, BlobsNames.Sano);
+            await repositoryBlob.DowloadBlobs(brocadoPath, BlobsNames.Brocado);
+            await repositoryBlob.DowloadBlobs(sanoPath, BlobsNames.Sano);
 
 
             // obtener la lsita de imagenes en el directorio para entrenarlos
-            IEnumerable<ImageData> images = this.directoryProgram.LoadImagesFromDirectory(assentPath, true);
+            var images = directoryProgram.LoadImagesFromDirectory(assentPath, true);
 
             //pasarle las imagenes al mlcontext
             IDataView imageData = mLContext.Data.LoadFromEnumerable(images);
@@ -79,7 +66,7 @@ namespace Cafe.Intelligent.Application.ML
         /// luego el del 30% que es para validar se divide en 90% para validad y un 10% para pruebas
         /// </summary>
         /// <param name="preProcessedData"></param>
-        internal (IDataView trains, IDataView validations, IDataView tests) DivideData(IDataView preProcessedData)
+        internal static (IDataView trains, IDataView validations, IDataView tests) DivideData(IDataView preProcessedData)
         {
             TrainTestData trainSplit = mLContext.Data.TrainTestSplit(data: preProcessedData, testFraction: 0.3);
             TrainTestData validationTestSplit = mLContext.Data.TrainTestSplit(trainSplit.TestSet);
@@ -90,7 +77,6 @@ namespace Cafe.Intelligent.Application.ML
             IDataView testSet = validationTestSplit.TrainSet;
 
             return (trainSet, validationSet, testSet);
-
         }
 
         /// <summary>
@@ -99,7 +85,7 @@ namespace Cafe.Intelligent.Application.ML
         /// <param name="trainSet"></param>
         /// <param name="validationSet"></param>
         /// <param name="testSet"></param>
-        internal void Fit(IDataView trainSet, IDataView validationSet, IDataView testSet)
+        internal static void Fit(IDataView trainSet, IDataView validationSet, IDataView testSet)
         {
             //definir la canalizacion de la formacion
             //almacena el conjunto de parametor obligatorios y opcionales para la clasificacion de imagenes
@@ -122,5 +108,71 @@ namespace Cafe.Intelligent.Application.ML
             //entrenar el modelo
             ITransformer trainedModel = trainNingPipeline.Fit(trainSet);
         }
+    }
+
+    ///// <summary>
+    ///// representa los datos cargados inicialmente
+    ///// </summary>
+    //public class ImageData
+    //{
+    //    /// <summary>
+    //    /// ruta donde se almacenan las imagenes
+    //    /// </summary>
+    //    public string ImagePath { get; set; }
+
+    //    /// <summary>
+    //    /// es la categoria a la que pertenecen las imagenes, valor a predecir
+    //    /// </summary>
+    //    public string Label { get; set; }
+    //}
+
+    /// <summary>
+    /// representa los datos de entrada,
+    /// Image y LabelAsKey son los que nos permiten entrenar el modelo
+    /// ImagePath y label son para facilitar el acceso al nombre y categoria
+    /// </summary>
+    public class ModelImput
+    {
+        /// <summary>
+        /// representa la imagen
+        /// </summary>
+        public byte[] Image { get; set; }
+
+        /// <summary>
+        /// representacion numerica de label osea de la categoria a la que pertenece las imagenes
+        /// </summary>
+        public UInt32 LabelAsKey { get; set; }
+
+        /// <summary>
+        /// es la ruta donde se almacena la imagen
+        /// </summary>
+        public string ImagePath { get; set; }
+
+        /// <summary>
+        /// es la categoria a la que pertenece la imagen
+        /// </summary>
+        public string Label { get; set; }
+    }
+
+    /// <summary>
+    /// representa los datos de salida
+    /// PredictedLabel es el que nos representa la prediccion
+    /// </summary>
+    public class ModelOutput
+    {
+        /// <summary>
+        /// ruta donde se almacena la imagen
+        /// </summary>
+        public string ImagePath { get; set; }
+
+        /// <summary>
+        /// es la categoria original a la que pertenece la imagen
+        /// </summary>
+        public string Label { get; set; }
+
+        /// <summary>
+        /// es el valor predicho por el modelo
+        /// </summary>
+        public string PredictedLabel { get; set; }
     }
 }

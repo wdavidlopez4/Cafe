@@ -1,6 +1,7 @@
 ﻿using Cafe.Intelligent.Application.ML;
 using Cafe.Intelligent.Domain.Factories;
 using Cafe.Intelligent.Domain.Ports;
+using Cafe.Intelligent.Infrastructure.Mapping;
 using Cafe.Intelligent.Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,7 +17,7 @@ namespace Cafe.Intelligent.Infrastructure.Startup
             services.AddScoped<IFactory, Factory>();
             services.AddScoped<IRepositoryBlob, RepositoryBlob>();
             services.AddScoped<IDirectoryProgram, DirectoryProgram>();
-            services.AddScoped<MLFit>();
+            services.AddScoped<IAutoMapping, AutoMapping>();
         }
     }
 

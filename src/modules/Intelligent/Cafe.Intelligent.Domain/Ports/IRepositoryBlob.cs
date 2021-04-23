@@ -20,7 +20,7 @@ namespace Cafe.Intelligent.Domain.Ports
         /// </summary>
         /// <param name = "nameBlobContainer" ></ param >
         /// < returns ></ returns >
-        public Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageData;
+        public Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageDataModel;
 
         /// <summary>
         /// descargar los archivos en un directorio
