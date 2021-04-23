@@ -1,6 +1,7 @@
 using Cafe.Configuration.Infrastructure.Startup;
 using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
 using Cafe.Intelligent.Application.ConfigurationEventHandler.MonitoringEventHandler;
+using Cafe.Intelligent.Infrastructure.Startup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,6 +63,7 @@ namespace Cafe.Web.Api
 
             //iniciar y configurar los modulos
             CoffeeConfigurationStartup.ConfigurationServices(services, this.Configuration);
+            CoffeeIntelligentStartup.ConfigurationServices(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
