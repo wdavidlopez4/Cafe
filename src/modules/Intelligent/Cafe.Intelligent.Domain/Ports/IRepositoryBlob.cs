@@ -11,24 +11,24 @@ namespace Cafe.Intelligent.Domain.Ports
         /// <summary>
         /// obtenemos las url de los blobs
         /// </summary>
-        /// <param name="nameBlob"></param>
+        /// <param name="nameBlobContainer"></param>
         /// <returns></returns>
-        public Task<List<string>> GetNamesBlobs(string nameBlob);
+        public Task<List<string>> GetNamesBlobs(string nameBlobContainer);
 
         /// <summary>
         /// obtenemos los nombres de los blobs
         /// </summary>
-        /// <param name = "nameBlob" ></ param >
+        /// <param name = "nameBlobContainer" ></ param >
         /// < returns ></ returns >
-        public Task<List<T>> GetEntitiesBlobs<T>(string nameBlob, string label) where T : ImageData;
+        public Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageData;
 
         /// <summary>
         /// descargar los archivos en un directorio
         /// </summary>
         /// <param name="DirectoryUrl"></param>
-        /// <param name="nameBlob"></param>
+        /// <param name="nameBlobContainer"></param>
         /// <returns></returns>
-        public Task DowloadBlobs(string DirectoryUrl, string nameBlob);
+        public Task DowloadBlobs(string DirectoryUrl, string nameBlobContainer);
     }
 
 }

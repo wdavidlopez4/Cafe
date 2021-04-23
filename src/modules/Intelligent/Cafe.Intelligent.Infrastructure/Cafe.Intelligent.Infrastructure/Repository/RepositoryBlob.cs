@@ -22,9 +22,9 @@ namespace Cafe.Intelligent.Infrastructure.Repository
             this.factory = factory;
         }
 
-        public async Task<List<string>> GetNamesBlobs(string nameBlob)
+        public async Task<List<string>> GetNamesBlobs(string nameBlobContainer)
         {
-            var container = this.blobServiceClient.GetBlobContainerClient(nameBlob);
+            var container = this.blobServiceClient.GetBlobContainerClient(nameBlobContainer);
             var items = new List<string>();
 
             await foreach (var blob in container.GetBlobsAsync())
@@ -35,12 +35,12 @@ namespace Cafe.Intelligent.Infrastructure.Repository
             return items;
         }
 
-        public async Task<List<T>> GetEntitiesBlobs<T>(string nameBlob, string label) where T : ImageData
+        public async Task<List<T>> GetEntitiesBlobs<T>(string nameBlobContainer, string label) where T : ImageData
         {
-            var container = this.blobServiceClient.GetBlobContainerClient(nameBlob);
+            var container = this.blobServiceClient.GetBlobContainerClient(nameBlobContainer);
             var entities = new List<T>();
 
-            var names = await GetNamesBlobs(nameBlob);
+            var names = await GetNamesBlobs(nameBlobContainer);
 
             foreach (var name in names)
             {
@@ -54,10 +54,10 @@ namespace Cafe.Intelligent.Infrastructure.Repository
             return entities;
         }
 
-        public async Task DowloadBlobs(string DirectoryUrl, string nameBlob)
+        public async Task DowloadBlobs(string DirectoryUrl, string nameBlobContainer)
         {
-            List<string> namesBlobs = await GetNamesBlobs(nameBlob);
-            var container = this.blobServiceClient.GetBlobContainerClient(nameBlob);
+            List<string> namesBlobs = await GetNamesBlobs(nameBlobContainer);
+            var container = this.blobServiceClient.GetBlobContainerClient(nameBlobContainer);
 
             foreach (var name in namesBlobs)
             {
