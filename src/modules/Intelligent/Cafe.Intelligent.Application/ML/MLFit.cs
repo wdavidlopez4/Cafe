@@ -10,7 +10,7 @@ using static Microsoft.ML.DataOperationsCatalog;
 
 namespace Cafe.Intelligent.Application.ML
 {
-    internal class MLFit
+    public class MLFit
     {
 
         private readonly IDirectoryProgram directoryProgram;
