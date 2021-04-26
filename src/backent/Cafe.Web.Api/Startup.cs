@@ -1,4 +1,7 @@
 using Cafe.Configuration.Infrastructure.Startup;
+using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
+using Cafe.Intelligent.Application.ConfigurationEventHandler.MonitoringEventHandler;
+using Cafe.Intelligent.Infrastructure.Startup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +34,7 @@ namespace Cafe.Web.Api
         {
             services.AddControllers();
 
-            //configuracion api
+            //configuracion api para la autentificacion por jwt token
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                  options.TokenValidationParameters = new TokenValidationParameters
@@ -47,8 +50,20 @@ namespace Cafe.Web.Api
                      ClockSkew = TimeSpan.Zero
                  });
 
+            //subcribirce a los eventos
+            services.AddEventBus(builder =>
+            {
+                builder.AddInMemoryEventBus(subscriber =>
+                {
+                    //1.el evento, 2.manejador
+                    subscriber.Subscribe<MonitoringImageBeginEvent, MonitoringImageEventHandler>();
+                    //subscriber.SubscribeAllHandledEvents<MyEventHandler>(); // other way
+                });
+            });
+
             //iniciar y configurar los modulos
             CoffeeConfigurationStartup.ConfigurationServices(services, this.Configuration);
+            CoffeeIntelligentStartup.ConfigurationServices(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

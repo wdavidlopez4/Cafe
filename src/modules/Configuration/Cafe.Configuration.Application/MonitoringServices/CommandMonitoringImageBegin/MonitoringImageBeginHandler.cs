@@ -2,6 +2,8 @@
 using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
+using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
+using JKang.EventBus;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,14 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
 
         private readonly IAutoMapping autoMapping;
 
-        public MonitoringImageBeginHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping)
+        private readonly IEventPublisher eventPublisher;
+
+        public MonitoringImageBeginHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping, IEventPublisher eventPublisher)
         {
             this.autoMapping = autoMapping;
             this.factory = factory;
             this.repository = repository;
+            this.eventPublisher = eventPublisher;
         }
 
         public async Task<MonitoringImageBeginDTO> Handle(MonitoringImageBegin request, CancellationToken cancellationToken)
@@ -49,11 +54,18 @@ namespace Cafe.Configuration.Application.MonitoringServices.CommandMonitoringIma
             // verificar que la configuracion del cultivo este lista para comenzar a monitoriarse
             var configurationCrop = await this.CheckConfigurationCrop(crop.ConfigurationCrop.Id, cancellationToken);
 
-            //crear, guardar, mapear y retornar el monitoreo
+            //crear el monitoreo
             var monitoring = (ImageMonitoring) this.factory.CreateMonitoring(request.ActivateByImage, false, crop.Id); //la activacion es falsa asta que la inteligencia procese la imagen y determine si esta brocado o no
 
-            return this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginDTO>(
-                await this.repository.Save<ImageMonitoring>(monitoring, cancellationToken));
+            //guardar el monitoro
+            monitoring = await this.repository.Save<ImageMonitoring>(monitoring, cancellationToken);
+
+            //publicar el monitoreo
+            var monitoringEvent = this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginEvent>(monitoring);
+            await this.eventPublisher.PublishEventAsync(monitoringEvent);
+
+            //mapear el monitoreo guardado y retorna
+            return this.autoMapping.Map<ImageMonitoring, MonitoringImageBeginDTO>(monitoring);
         }
 
         /// <summary>

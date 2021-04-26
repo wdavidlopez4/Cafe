@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JKang.EventBus" Version="1.1.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cafe.Configuration.Domain\Cafe.Configuration.Domain.csproj" />
+    <ProjectReference Include="..\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

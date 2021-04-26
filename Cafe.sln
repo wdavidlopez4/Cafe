@@ -15,15 +15,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intelligent", "Intelligent"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Web.Api", "src\backent\Cafe.Web.Api\Cafe.Web.Api.csproj", "{D6D9C65A-3326-4B48-9EC3-FF36012F5D32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Configuration.Domain", "src\modules\Configuration\Cafe.Configuration.Domain\Cafe.Configuration.Domain.csproj", "{936107A1-193C-4306-B60C-50D9711B597C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Configuration.Domain", "src\modules\Configuration\Cafe.Configuration.Domain\Cafe.Configuration.Domain.csproj", "{936107A1-193C-4306-B60C-50D9711B597C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0DC1722E-43B4-4C5B-A4DA-8AEAE9629736}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{94FA2940-1A14-44DC-A605-F91E77BEE7D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Configuration.Application", "src\modules\Configuration\Cafe.Configuration.Application\Cafe.Configuration.Application.csproj", "{97C288EA-5E3A-4E1C-9C76-E16A0FFDEA14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Configuration.Application", "src\modules\Configuration\Cafe.Configuration.Application\Cafe.Configuration.Application.csproj", "{97C288EA-5E3A-4E1C-9C76-E16A0FFDEA14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Configuration.Infrastructure", "src\modules\Configuration\Cafe.Configuration.Infrastructure\Cafe.Configuration.Infrastructure.csproj", "{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Configuration.Infrastructure", "src\modules\Configuration\Cafe.Configuration.Infrastructure\Cafe.Configuration.Infrastructure.csproj", "{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Configuration.IntegrationEvents", "src\modules\Configuration\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj", "{95C83B64-5075-438C-9112-969CA3D858A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Intelligent.Domain", "src\modules\Intelligent\Cafe.Intelligent.Domain\Cafe.Intelligent.Domain.csproj", "{D1FB95A5-F216-4D58-8BFA-480702247C91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Intelligent.Application", "src\modules\Intelligent\Cafe.Intelligent.Application\Cafe.Intelligent.Application.csproj", "{B104DB51-B7A7-4432-A4FE-CDCF427505EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Intelligent.Infrastructure", "src\modules\Intelligent\Cafe.Intelligent.Infrastructure\Cafe.Intelligent.Infrastructure\Cafe.Intelligent.Infrastructure.csproj", "{E690D8F7-E2BF-4571-A6CD-B8E66EF60623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +55,22 @@ Global
 		{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C83B64-5075-438C-9112-969CA3D858A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C83B64-5075-438C-9112-969CA3D858A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C83B64-5075-438C-9112-969CA3D858A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C83B64-5075-438C-9112-969CA3D858A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FB95A5-F216-4D58-8BFA-480702247C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +85,10 @@ Global
 		{936107A1-193C-4306-B60C-50D9711B597C} = {85017B89-4135-4170-8925-2841DB74D12B}
 		{97C288EA-5E3A-4E1C-9C76-E16A0FFDEA14} = {85017B89-4135-4170-8925-2841DB74D12B}
 		{BDD93903-CB0C-4CC5-8BAE-F6DCDA0481E1} = {85017B89-4135-4170-8925-2841DB74D12B}
+		{95C83B64-5075-438C-9112-969CA3D858A0} = {85017B89-4135-4170-8925-2841DB74D12B}
+		{D1FB95A5-F216-4D58-8BFA-480702247C91} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
+		{B104DB51-B7A7-4432-A4FE-CDCF427505EF} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
+		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {336F55AE-D96C-4E08-9C86-5A6BF03B8A55}
