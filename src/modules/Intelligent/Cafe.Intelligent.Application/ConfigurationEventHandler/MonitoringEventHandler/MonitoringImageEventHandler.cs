@@ -27,17 +27,9 @@ namespace Cafe.Intelligent.Application.ConfigurationEventHandler.MonitoringEvent
             this.repositoryBlob = repositoryBlob;
         }
 
-        public async Task HandleEventAsync(MonitoringImageBeginEvent @event)
+        public Task HandleEventAsync(MonitoringImageBeginEvent @event)
         {
-            //preparar los dataSet para la IA
-            var preProcessedData = await MLFit.PrepareData(directoryProgram, repositoryBlob);
-
-            //dividir los dataser en datos de validacion, prueba y entrenamiento
-            (IDataView trainSet, IDataView validationSet, IDataView testSet) = MLFit.DivideData(preProcessedData);
-
-            //entrenar la IA
-            MLFit.Fit(trainSet, validationSet, testSet);
-
+            return Task.CompletedTask;
         }
     }
 }
