@@ -2,6 +2,8 @@
 using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
+using Cafe.Configuration.IntegrationEvents.ArduinoEvents;
+using JKang.EventBus;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,16 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSyncUp
 
         private readonly IFactory factory;
 
+        private readonly IEventPublisher eventPublisher;
 
-        public ArduinoSyncUpHandler(IRepository repository, IAutoMapping autoMapping, IFactory factory)
+
+        public ArduinoSyncUpHandler(IRepository repository, IAutoMapping autoMapping, IFactory factory, 
+            IEventPublisher eventPublisher)
         {
             this.factory = factory;
             this.autoMapping = autoMapping;
             this.repository = repository;
+            this.eventPublisher = eventPublisher;
         }
 
         public async Task<ArduinoSyncUpDTO> Handle(ArduinoSyncUp request, CancellationToken cancellationToken)
@@ -63,6 +69,11 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSyncUp
             var newArduino = (Arduino)this.factory.CreateArduino(name: arduino.Name, 
                 configurationCropId: arduino.ConfigurationCropId, id: Guid.Parse(arduino.Id), 
                 occupied: true);
+
+            //crear el evento en el que se sincronizo el arduino.
+            var ArduinoEvent = this.autoMapping.Map<Arduino, ArduinoSyncUpEvent>(newArduino);
+            ArduinoEvent.CropId = arduino.ConfigurationCrop.CropId;
+            await this.eventPublisher.PublishEventAsync(ArduinoEvent);
 
             //modificamos, mapeamos y retornamos el arduino
             return this.autoMapping.Map<Arduino, ArduinoSyncUpDTO>(await this.repository.Update<Arduino>(newArduino, cancellationToken));

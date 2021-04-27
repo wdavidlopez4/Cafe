@@ -2,6 +2,8 @@
 using Cafe.Configuration.Domain.Entities;
 using Cafe.Configuration.Domain.Factories;
 using Cafe.Configuration.Domain.Ports;
+using Cafe.Configuration.IntegrationEvents.CropEvents;
+using JKang.EventBus;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,15 @@ namespace Cafe.Configuration.Application.CropServices.CommandCropCreate
 
         private readonly IAutoMapping autoMapping;
 
-        public CropCreateHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping)
+        private readonly IEventPublisher eventPublisher;
+
+        public CropCreateHandler(IRepository repository, IFactory factory, IAutoMapping autoMapping,
+            IEventPublisher eventPublisher)
         {
             this.autoMapping = autoMapping;
             this.factory = factory;
-            this.repository = repository; ;
+            this.repository = repository;
+            this.eventPublisher = eventPublisher;
         }
 
         public async Task<CropCreateDTO> Handle(CropCreate request, CancellationToken cancellationToken)
@@ -38,6 +44,9 @@ namespace Cafe.Configuration.Application.CropServices.CommandCropCreate
                 throw new ArgumentDifferentException("el id del caficultor y el token que contine el id del cadicultor no son iguales.");
 
             var crop = (Crop) this.factory.CreateCrop(request.Name, request.DayFormation, request.CoffeeGrowerId);
+
+            //publicar el evento de creacion de el cultivo
+            await this.eventPublisher.PublishEventAsync(this.autoMapping.Map<Crop, CropCreateEvent>(crop));
 
             return autoMapping.Map<Crop, CropCreateDTO>(await this.repository.Save<Crop>(crop, cancellationToken));
         }
