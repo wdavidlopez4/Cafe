@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cafe.Intelligent.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Climate.Domain", "src\modules\Climate\Cafe.Climate.Domain\Cafe.Climate.Domain.csproj", "{67C56B78-3410-4327-B2C4-E2381B588C5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cafe.Climate.Application", "src\modules\Climate\Cafe.Climate.Application\Cafe.Climate.Application.csproj", "{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{67C56B78-3410-4327-B2C4-E2381B588C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67C56B78-3410-4327-B2C4-E2381B588C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67C56B78-3410-4327-B2C4-E2381B588C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{B104DB51-B7A7-4432-A4FE-CDCF427505EF} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
 		{E690D8F7-E2BF-4571-A6CD-B8E66EF60623} = {A7685824-EFA8-4617-9D88-D2E4DCF50B0A}
 		{67C56B78-3410-4327-B2C4-E2381B588C5E} = {0623D110-7B5F-455B-8309-BAAAD8E8077A}
+		{C8B3A4D5-4AA4-404C-85D1-0A57136B17BE} = {0623D110-7B5F-455B-8309-BAAAD8E8077A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {336F55AE-D96C-4E08-9C86-5A6BF03B8A55}
