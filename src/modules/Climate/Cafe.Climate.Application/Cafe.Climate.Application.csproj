@@ -8,4 +8,9 @@
     <ProjectReference Include="..\Cafe.Climate.Domain\Cafe.Climate.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TemperatureInceptThresholdServices\CommandInceptThresholdByArduinoSend\" />
+    <Folder Include="TemperatureInceptThresholdServices\QueryInceptThresholdByIdCultive\" />
+  </ItemGroup>
+
 </Project>

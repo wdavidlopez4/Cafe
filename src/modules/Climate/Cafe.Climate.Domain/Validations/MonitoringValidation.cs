@@ -11,6 +11,7 @@ namespace Cafe.Climate.Domain.Validations
         {
             (x) => x.Id != null && x.Id != "",
             (x) => x.ArduinoId != null && x.ArduinoId != "",
+            (x) => x.CropId != null && x.CropId != ""
         };
     }
 }

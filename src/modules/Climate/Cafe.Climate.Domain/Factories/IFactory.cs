@@ -13,7 +13,7 @@ namespace Cafe.Climate.Domain.Factories
         public EntityBase CreateAverageWeather(double accumulatedTemperatureWeek, double accumulatedTemperatureMonth,
             double accumulatedTemperatureHour, double accumulatedTemperatureMinute);
 
-        public EntityBase CreateMonitoring(string arduinoId, List<ClimaticFactor> climate, Guid? id = null);
+        public EntityBase CreateMonitoring(string arduinoId, string cropId, List<ClimaticFactor> climate, Guid? id = null);
 
         public EntityBase CreateTemperatureInceptThreshold(string monitoringId, string averageWeatherId, string optimalStateDevelopmentThreshold,
             double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id);
