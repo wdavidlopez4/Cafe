@@ -17,7 +17,7 @@ namespace Cafe.Climate.Domain.Entities
 
         public double AccumulatedTemperatureMinute { get; private set; }
 
-        public Climate Climate { get; private set; }
+        public ClimaticFactor Climate { get; private set; }
 
         internal AverageWeather(double accumulatedTemperatureWeek, double accumulatedTemperatureMonth,
             double accumulatedTemperatureHour, double accumulatedTemperatureMinute)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Cafe.Climate.Domain.Entities
 {
-    public class TemperatureInceptThreshold : Climate
+    public class TemperatureInceptThreshold : ClimaticFactor
     {
         /// <summary>
         /// estado del umbral optimo de desarrollo en temperatura promedia
@@ -28,7 +28,7 @@ namespace Cafe.Climate.Domain.Entities
         public double UMD { get; private set; }
 
         internal TemperatureInceptThreshold(string monitoringId, string averageWeatherId, string optimalStateDevelopmentThreshold,
-            double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id): base(monitoringId, averageWeatherId, id)
+            double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id = null): base(monitoringId, averageWeatherId, id)
         {
             this.OptimalStateDevelopmentThreshold = optimalStateDevelopmentThreshold;
             this.OptimalTemperatureDevelopmentThreshold = optimalTemperatureDevelopmentThreshold;

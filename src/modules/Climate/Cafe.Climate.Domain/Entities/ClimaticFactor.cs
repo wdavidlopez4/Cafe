@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cafe.Climate.Domain.Entities
 {
-    public abstract class Climate : EntityBase
+    public abstract class ClimaticFactor : EntityBase
     {
         public Monitoring Monitoring { get; private set; }
 
@@ -14,13 +14,13 @@ namespace Cafe.Climate.Domain.Entities
 
         public string AverageWeatherId { get; private set; }
 
-        internal protected Climate(string monitoringId, string averageWeatherId, Guid? id = null): base(id)
+        internal protected ClimaticFactor(string monitoringId, string averageWeatherId, Guid? id = null): base(id)
         {
             this.MonitoringId = monitoringId;
             this.AverageWeatherId = averageWeatherId;
         }
 
-        internal protected Climate(Guid? id = null) : base(id)
+        internal protected ClimaticFactor(Guid? id = null) : base(id)
         {
             //for ef
         }

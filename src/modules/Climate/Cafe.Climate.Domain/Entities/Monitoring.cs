@@ -11,9 +11,9 @@ namespace Cafe.Climate.Domain.Entities
 
         public string ArduinoId { get; private set; }
 
-        public List<Climate> Climate { get; private set; }
+        public List<ClimaticFactor> Climate { get; private set; }
 
-        internal Monitoring(string arduinoId, List<Climate> climate, Guid? id = null) : base(id)
+        internal Monitoring(string arduinoId, List<ClimaticFactor> climate, Guid? id = null) : base(id)
         {
             this.ArduinoId = arduinoId;
             this.Climate = climate;
