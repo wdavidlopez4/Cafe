@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cafe.Climate.Domain.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -33,6 +34,9 @@ namespace Cafe.Climate.Domain.Entities
             this.OptimalTemperatureDevelopmentThreshold = optimalTemperatureDevelopmentThreshold;
             this.UmD = UmD;
             this.UMD = UMD;
+
+            if (Validator.Validate<TemperatureInceptThreshold>(this, TemperatureInceptThresholdValidation.Validation) == false)
+                throw new ArgumentException("modelo incorrecto");
         }
 
         private TemperatureInceptThreshold():base()

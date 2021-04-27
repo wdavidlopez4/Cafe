@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Cafe.Climate.Domain.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Cafe.Climate.Domain.Entities
 {
-    public class Arduino
+    public class Arduino : EntityBase
     {
         public double Temperature { get; private set; }
 
@@ -20,6 +21,9 @@ namespace Cafe.Climate.Domain.Entities
             this.Humididy = humididy;
             this.Temperature = temperature;
             this.Monitoring = monitoring;
+
+            if (Validator.Validate<Arduino>(this, ArduinoValidation.Validation) == false)
+                throw new ArgumentException("el modelo es invalido");
         }
 
         private Arduino()

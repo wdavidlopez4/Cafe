@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cafe.Climate.Domain.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +17,9 @@ namespace Cafe.Climate.Domain.Entities
         {
             this.ArduinoId = arduinoId;
             this.Climate = climate;
+
+            if (Validator.Validate<Monitoring>(this, MonitoringValidation.Validation) == false)
+                throw new ArgumentException("modelo es incorrecto");
         }
 
         private Monitoring()
