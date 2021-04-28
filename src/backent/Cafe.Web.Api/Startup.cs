@@ -1,4 +1,8 @@
+using Cafe.Climate.Application.ArduinoEventHandler;
+using Cafe.Climate.Application.CropEventHandler;
 using Cafe.Configuration.Infrastructure.Startup;
+using Cafe.Configuration.IntegrationEvents.ArduinoEvents;
+using Cafe.Configuration.IntegrationEvents.CropEvents;
 using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
 using Cafe.Intelligent.Application.ConfigurationEventHandler.MonitoringEventHandler;
 using Cafe.Intelligent.Infrastructure.Startup;
@@ -57,6 +61,8 @@ namespace Cafe.Web.Api
                 {
                     //1.el evento, 2.manejador
                     subscriber.Subscribe<MonitoringImageBeginEvent, MonitoringImageEventHandler>();
+                    subscriber.Subscribe<ArduinoSyncUpEvent, ArduinoSyncUpEventHandler>();
+                    subscriber.Subscribe<CropCreateEvent, CropCreateEventHandler>();
                     //subscriber.SubscribeAllHandledEvents<MyEventHandler>(); // other way
                 });
             });

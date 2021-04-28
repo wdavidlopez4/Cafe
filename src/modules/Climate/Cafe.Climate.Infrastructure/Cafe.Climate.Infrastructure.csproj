@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cafe.Climate.Application\Cafe.Climate.Application.csproj" />
+    <ProjectReference Include="..\Cafe.Climate.Domain\Cafe.Climate.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

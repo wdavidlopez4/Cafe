@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\Cafe.Configuration.IntegrationEvents\Cafe.Configuration.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Cafe.Climate.Domain\Cafe.Climate.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TemperatureInceptThresholdServices\CommandInceptThresholdCalculate\" />
+    <Folder Include="TemperatureInceptThresholdServices\QueryInceptThresholdByIdCultive\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JKang.EventBus" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>
