@@ -11,7 +11,7 @@ namespace Cafe.Climate.Application.CropEventHandler
     {
         public Task HandleEventAsync(CropCreateEvent @event)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

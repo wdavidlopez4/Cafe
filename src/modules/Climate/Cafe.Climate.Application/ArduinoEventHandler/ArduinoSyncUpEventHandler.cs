@@ -11,7 +11,7 @@ namespace Cafe.Climate.Application.ArduinoEventHandler
     {
         public Task HandleEventAsync(ArduinoSyncUpEvent @event)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }
