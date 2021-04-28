@@ -15,12 +15,16 @@ namespace Cafe.Climate.Domain.Entities
 
         public Monitoring Monitoring { get; private set; }
 
-        internal Arduino(double temperature, double humididy, double altitude, Monitoring monitoring = null)
+        public bool Occupied { get; private set; }
+
+        internal Arduino(double temperature, double humididy, double altitude, bool occupied, 
+            Monitoring monitoring = null)
         {
             this.Altitude = altitude;
             this.Humididy = humididy;
             this.Temperature = temperature;
             this.Monitoring = monitoring;
+            this.Occupied = occupied;
 
             if (Validator.Validate<Arduino>(this, ArduinoValidation.Validation) == false)
                 throw new ArgumentException("el modelo es invalido");

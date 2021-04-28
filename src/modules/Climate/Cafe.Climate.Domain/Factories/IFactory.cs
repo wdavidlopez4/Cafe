@@ -8,7 +8,7 @@ namespace Cafe.Climate.Domain.Factories
     public interface IFactory
     {
         public EntityBase CreateArduino(double temperature, double humididy, 
-            double altitude, Monitoring monitoring = null);
+            double altitude, bool occupied, Monitoring monitoring = null);
 
         public EntityBase CreateAverageWeather(double accumulatedTemperatureWeek, double accumulatedTemperatureMonth,
             double accumulatedTemperatureHour, double accumulatedTemperatureMinute);
