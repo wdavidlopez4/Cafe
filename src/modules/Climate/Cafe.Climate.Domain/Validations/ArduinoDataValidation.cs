@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Cafe.Climate.Domain.Validations
 {
-    public class ArduinoValidation
+    public class ArduinoDataValidation
     {
-        internal static readonly Predicate<Arduino>[] Validation =
+        internal static readonly Predicate<ArduinoData>[] Validation =
         {
             (x) => x.Id != null && x.Id != "",
             (x) => x.Altitude >= 0,
