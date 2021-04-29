@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Cafe.Climate.Application.ArduinoServices.QueryArduinoByRangeTime
 {
-    public class ArduinoByRangeTime : IRequest<ArduinoByRangeTimeDTO>
+    public class ArduinoByRangeTime : IRequest<List<ArduinoByRangeTimeDTO>>
     {
         public string CropId { get; set; }
 
