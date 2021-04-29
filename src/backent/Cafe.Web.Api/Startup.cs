@@ -82,7 +82,7 @@ namespace Cafe.Web.Api
 
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();  se comenta el redireccionamiento https para que el arduino pueda funcionar
 
             app.UseRouting();
 
