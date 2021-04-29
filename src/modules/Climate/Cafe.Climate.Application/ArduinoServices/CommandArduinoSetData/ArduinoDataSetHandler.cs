@@ -33,13 +33,19 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
                 throw new ArgumentNullException("peticion nula para el seteo de el arduino");
 
             else if (this.repository.Exists<Crop>(x => x.Id == request.CropId) == false)
-                throw new EntityNullException("trata de recuperar datos de un arduino que no a creado...");
+                throw new EntityNullException("trata de recuperar datos de un cultivo que no a creado...");
 
-            //recuperar cultivo con el arduino
+            //recuperar cultivo con el arduino y verificar
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId,
                  x => x.Monitoring.Arduino, cancellationToken);
 
-            if(crop.CoffeeGrowerId != request.Claims.Find(x => x.Type == "CoffeeGrowerId").Value)
+            if (crop.Monitoring.Arduino == null)
+                throw new ArgumentNullException("el arduino no se a creado");
+
+            else if (crop.Monitoring.Arduino.Occupied == false)
+                throw new ArgumentNullException("el arduino no se a sincronizado");
+
+            else if (crop.CoffeeGrowerId != request.Claims.Find(x => x.Type == "CoffeeGrowerId").Value)
                 throw new ArgumentNullException("el usuario no pertenece al cultivo. verificar el token");
 
             //crear, guardar y mapear los datos del arduino "temperatura humedad altitud..."
