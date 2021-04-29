@@ -11,6 +11,8 @@ using Cafe.Configuration.Application.MonitoringServices.CommandMonitoringManualB
 using Cafe.Configuration.Application.SetUpServices.QuerySetUpByIdCrop;
 using Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp;
 using Cafe.Configuration.Domain.Entities;
+using Cafe.Configuration.IntegrationEvents.ArduinoEvents;
+using Cafe.Configuration.IntegrationEvents.CropEvents;
 using Cafe.Configuration.IntegrationEvents.MonitoringEvents;
 using System;
 using System.Collections.Generic;
@@ -42,8 +44,8 @@ namespace Cafe.Configuration.Infrastructure.Mapping
             this.CreateMap<ManualMonitoring, MonitoringManualBeginDTO>();
             this.CreateMap<ImageMonitoring, MonitoringImageBeginDTO>();
             this.CreateMap<ImageMonitoring, MonitoringImageBeginEvent>();
-            this.CreateMap<Arduino, ArduinoSyncUpDTO>();
-            this.CreateMap<Crop, CropCreateDTO>();
+            this.CreateMap<Arduino, ArduinoSyncUpEvent>();
+            this.CreateMap<Crop, CropCreateEvent>();
         }
     }
 }

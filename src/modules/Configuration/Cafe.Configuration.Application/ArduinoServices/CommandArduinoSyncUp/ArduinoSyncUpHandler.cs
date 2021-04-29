@@ -56,14 +56,6 @@ namespace Cafe.Configuration.Application.ArduinoServices.CommandArduinoSyncUp
 
             if(arduino == null)
                 throw new EntityNullException("no se pudo recuperar el arduino con el id porporcionado");
-            else if(arduino.ConfigurationCrop == null)
-                throw new EntityNullException("extraño: el arduino no tiene una configuracion: nunca deberia suceder");
-            else if(arduino.ConfigurationCrop.Crop == null)
-                throw new EntityNullException("extraño: el cultivo no existe: nunca deberia suceder");
-            else if (arduino.ConfigurationCrop.Crop.CoffeeGrower == null)
-                throw new EntityNullException("extraño: el CoffeeGrower no existe: nunca deberia suceder");
-            else if(arduino.ConfigurationCrop.Crop.CoffeeGrower.Id != coffeeGrowerId)
-                throw new EntityNullException("este arduino no pertenece al usuario del token enviado");
 
             //creamos el nuevo arduino para reemplazarlo con el actual: ocupado = verdadero
             var newArduino = (Arduino)this.factory.CreateArduino(name: arduino.Name, 
