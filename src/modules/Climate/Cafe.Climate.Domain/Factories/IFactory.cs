@@ -21,7 +21,7 @@ namespace Cafe.Climate.Domain.Factories
         public EntityBase CreateTemperatureInceptThreshold(string monitoringId, string averageWeatherId, string optimalStateDevelopmentThreshold,
             double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id);
 
-        public EntityBase CreateCrop(Guid id, string name);
+        public EntityBase CreateCrop(Guid id, string name, string coffeeGrowerId);
 
     }
 }

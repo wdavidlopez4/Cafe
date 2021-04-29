@@ -10,9 +10,12 @@ namespace Cafe.Climate.Domain.Entities
 
         public string Name { get; private set; }
 
-        internal Crop(Guid id, string name):base(id)
+        public string CoffeeGrowerId { get; private set; }
+
+        internal Crop(Guid id, string name, string coffeeGrowerId) :base(id)
         {
             this.Name = name;
+            this.CoffeeGrowerId = coffeeGrowerId;
         }
 
         private Crop()

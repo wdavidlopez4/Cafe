@@ -41,9 +41,9 @@ namespace Cafe.Climate.Domain.Factories
                 optimalTemperatureDevelopmentThreshold, UmD, UMD, id);
         }
 
-        public EntityBase CreateCrop(Guid id, string name)
+        public EntityBase CreateCrop(Guid id, string name, string coffeeGrowerId)
         {
-            return new Crop(id, name);
+            return new Crop(id, name, coffeeGrowerId);
         }
     }
 }
