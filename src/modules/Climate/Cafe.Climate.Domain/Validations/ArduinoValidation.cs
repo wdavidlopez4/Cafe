@@ -10,9 +10,9 @@ namespace Cafe.Climate.Domain.Validations
         internal static readonly Predicate<Arduino>[] Validation =
         {
             (x) => x.Id != null && x.Id != "",
-            (x) => x.Altitude != 0,
-            (x) => x.Humididy != 0,
-            (x) => x.Temperature != 0
+            (x) => x.Altitude >= 0,
+            (x) => x.Humididy >= 0,
+            (x) => x.Temperature >= 0
         };
     }
 }

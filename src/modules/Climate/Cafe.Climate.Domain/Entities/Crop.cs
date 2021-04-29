@@ -8,9 +8,11 @@ namespace Cafe.Climate.Domain.Entities
     {
         public Monitoring Monitoring { get; private set; }
 
-        internal Crop(Guid? id = null):base(id)
-        {
+        public string Name { get; private set; }
 
+        internal Crop(Guid id, string name):base(id)
+        {
+            this.Name = name;
         }
 
         private Crop()

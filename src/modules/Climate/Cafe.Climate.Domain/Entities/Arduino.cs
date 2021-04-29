@@ -15,19 +15,32 @@ namespace Cafe.Climate.Domain.Entities
 
         public Monitoring Monitoring { get; private set; }
 
+        public string MonitoringId { get; private set; }
+
         public bool Occupied { get; private set; }
 
-        internal Arduino(double temperature, double humididy, double altitude, bool occupied, 
-            Monitoring monitoring = null)
+        /// <summary>
+        /// contructor de arduino para el ardiuino fisico
+        /// </summary>
+        /// <param name="temperature"></param>
+        /// <param name="humididy"></param>
+        /// <param name="altitude"></param>
+        internal Arduino(double temperature, double humididy, double altitude)
         {
             this.Altitude = altitude;
             this.Humididy = humididy;
             this.Temperature = temperature;
-            this.Monitoring = monitoring;
-            this.Occupied = occupied;
 
             if (Validator.Validate<Arduino>(this, ArduinoValidation.Validation) == false)
                 throw new ArgumentException("el modelo es invalido");
+        }
+
+        internal Arduino(Guid id, string monitoringId, bool occupied):base(id)
+        {
+            this.MonitoringId = monitoringId;
+            this.Occupied = occupied;
+
+            //falta validarlo
         }
 
         private Arduino()
