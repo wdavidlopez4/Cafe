@@ -29,7 +29,7 @@ namespace Cafe.Climate.Application.CropEventHandler
                 throw new DuplicityEntityException("ya existe el cultivo para comenzarlo a monitorear.");
 
             //crear y guardar el cultivo
-            var crop = (Crop)this.factory.CreateCrop(Guid.Parse(@event.Id), @event.Name);
+            var crop = (Crop)this.factory.CreateCrop(Guid.Parse(@event.Id), @event.Name, @event.CoffeeGrowerId);
             crop = await this.repository.Save<Crop>(crop);
 
             //crear y guardar el monitoreo del cultivo
