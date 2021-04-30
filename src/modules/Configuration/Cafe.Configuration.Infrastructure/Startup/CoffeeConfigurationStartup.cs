@@ -8,6 +8,16 @@ using Microsoft.Extensions.Configuration; //getConnectionString
 using MediatR;
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerSignIn;
 using Cafe.Configuration.Application.CoffeeGrowerServices.CommandCoffeGrowerLogin;
+using System.Reflection;
+using Cafe.Configuration.Application.ArduinoServices.CommandArduinoSetUp;
+using Cafe.Configuration.Application.ArduinoServices.CommandArduinoSyncUp;
+using Cafe.Configuration.Application.CropServices.CommandCropCreate;
+using Cafe.Configuration.Application.CropServices.QueryCropById;
+using Cafe.Configuration.Application.CropServices.QueryCropByPage;
+using Cafe.Configuration.Application.MonitoringServices.CommandMonitoringImageBegin;
+using Cafe.Configuration.Application.MonitoringServices.CommandMonitoringManualBegin;
+using Cafe.Configuration.Application.SetUpServices.QuerySetUpByIdCrop;
+using Cafe.Configuration.Application.TemperatureServices.CommandTemperatureSetUp;
 
 namespace Cafe.Configuration.Infrastructure.Startup
 {
@@ -15,11 +25,12 @@ namespace Cafe.Configuration.Infrastructure.Startup
     {
         public static void ConfigurationServices(IServiceCollection services, IConfiguration configuration)
         {
+            InyectionContainer.Inyection(services);
             ConfigurationSqlServer(services, configuration);
             ConfigurarMapper(services);
             ConfigurarMediador(services);
 
-            InyectionContainer.Inyection(services);
+            
         }
 
         /// <summary>
@@ -51,8 +62,17 @@ namespace Cafe.Configuration.Infrastructure.Startup
         /// <param name="services"></param>
         private static void ConfigurarMediador(IServiceCollection services)
         {
-            services.AddMediatR(typeof(CoffeeGrowerSignIn).Assembly);
-            services.AddMediatR(typeof(CoffeGrowerLogin).Assembly);
+            services.AddMediatR(typeof(ArduinoSetUp).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(ArduinoSyncUp).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CoffeGrowerLogin).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CoffeeGrowerSignIn).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CropCreate).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CropById).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CropByPage).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(MonitoringImageBegin).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(MonitoringManualBegin).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(SetUpByIdCrop).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(TemperatureSetUp).GetTypeInfo().Assembly);
         }
     }
 }

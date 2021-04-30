@@ -7,6 +7,7 @@ using JKang.EventBus;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cafe.Climate.Application.CropEventHandler
@@ -30,11 +31,11 @@ namespace Cafe.Climate.Application.CropEventHandler
 
             //crear y guardar el cultivo
             var crop = (Crop)this.factory.CreateCrop(Guid.Parse(@event.Id), @event.Name, @event.CoffeeGrowerId);
-            crop = await this.repository.Save<Crop>(crop);
+            crop = await this.repository.Save<Crop>(crop, new CancellationToken());
 
             //crear y guardar el monitoreo del cultivo
             var monitoring = (Monitoring)this.factory.CreateMonitoring(crop.Id);
-            monitoring = await this.repository.Save<Monitoring>(monitoring);
+            monitoring = await this.repository.Save<Monitoring>(monitoring, new CancellationToken());
         }
     }
 }
