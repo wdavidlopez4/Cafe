@@ -45,5 +45,15 @@ namespace Cafe.Climate.Domain.Ports
         /// <returns></returns>
         public Task<T> GetWithNestedObject<T>(Expression<Func<T, bool>> expressionConditional,
             Expression<Func<T, object>> expressionNested, CancellationToken? cancellationToken = null) where T : EntityBase;
+
+        /// <summary>
+        /// trae una lista de objetos
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expressionConditional"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<List<T>> GetObjects<T>( Expression<Func<T, bool>> expressionConditional, 
+            CancellationToken? cancellationToken = null) where T : EntityBase;
     }
 }
