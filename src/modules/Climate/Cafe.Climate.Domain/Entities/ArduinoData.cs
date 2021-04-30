@@ -30,5 +30,10 @@ namespace Cafe.Climate.Domain.Entities
             if (Validator.Validate<ArduinoData>(this, ArduinoDataValidation.Validation) == false)
                 throw new ArgumentException("el modelo es invalido");
         }
+
+        private ArduinoData()
+        {
+            //for ef
+        }
     }
 }
