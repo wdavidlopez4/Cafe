@@ -20,20 +20,20 @@ namespace Cafe.Climate.Domain.Entities
         /// <summary>
         /// umbral minimo detectado de temperatura
         /// </summary>
-        public double UmD { get; private set; }
+        public double MaximunDevelopmentThreshold { get; private set; }
 
         /// <summary>
         /// umbral maximo detectado de temperatura
         /// </summary>
-        public double UMD { get; private set; }
+        public double MinimunDevelopmentThreshold { get; private set; }
 
         internal TemperatureInceptThreshold(string monitoringId, string averageWeatherId, string optimalStateDevelopmentThreshold,
-            double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id = null): base(monitoringId, averageWeatherId, id)
+            double optimalTemperatureDevelopmentThreshold, double UmD, double UMD, Guid? id = null): base(monitoringId, /*averageWeatherId,*/ id)
         {
             this.OptimalStateDevelopmentThreshold = optimalStateDevelopmentThreshold;
             this.OptimalTemperatureDevelopmentThreshold = optimalTemperatureDevelopmentThreshold;
-            this.UmD = UmD;
-            this.UMD = UMD;
+            this.MaximunDevelopmentThreshold = UmD;
+            this.MinimunDevelopmentThreshold = UMD;
 
             if (Validator.Validate<TemperatureInceptThreshold>(this, TemperatureInceptThresholdValidation.Validation) == false)
                 throw new ArgumentException("modelo incorrecto");
