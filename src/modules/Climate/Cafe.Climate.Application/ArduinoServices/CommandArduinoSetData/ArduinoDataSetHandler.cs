@@ -32,10 +32,10 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
             if (request == null)
                 throw new ArgumentNullException("peticion nula para el seteo de el arduino");
 
+            //recuperar cultivo con el arduino y verificar
             else if (this.repository.Exists<Crop>(x => x.Id == request.CropId) == false)
                 throw new EntityNullException("trata de recuperar datos de un cultivo que no a creado...");
 
-            //recuperar cultivo con el arduino y verificar
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == request.CropId,
                  x => x.Monitoring.Arduino, cancellationToken);
 
