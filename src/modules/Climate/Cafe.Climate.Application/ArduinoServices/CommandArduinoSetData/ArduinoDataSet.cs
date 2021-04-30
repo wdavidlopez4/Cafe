@@ -18,6 +18,6 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
 
         public DateTime Time { get; set; }
 
-        public List<Claim> Claims { get; private set; }
+        public List<Claim> Claims { get; set; }
     }
 }
