@@ -16,7 +16,7 @@ namespace Cafe.Climate.Domain.Ports
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public Task<T> Save<T>(T obj, CancellationToken? cancellationToken = null) where T : EntityBase;
+        public Task<T> Save<T>(T obj, CancellationToken cancellationToken) where T : EntityBase;
 
         /// <summary>
         /// verificar si existe una entidad
@@ -33,7 +33,7 @@ namespace Cafe.Climate.Domain.Ports
         /// <param name="obj"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<T> Update<T>(T obj, CancellationToken? cancellationToken = null) where T : EntityBase;
+        public Task<T> Update<T>(T obj, CancellationToken cancellationToken) where T : EntityBase;
 
         /// <summary>
         /// retorna un objeto anidado, retorna el objeto pero un un solo objeto anidado.
@@ -44,7 +44,7 @@ namespace Cafe.Climate.Domain.Ports
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task<T> GetWithNestedObject<T>(Expression<Func<T, bool>> expressionConditional,
-            Expression<Func<T, object>> expressionNested, CancellationToken? cancellationToken = null) where T : EntityBase;
+            Expression<Func<T, object>> expressionNested, CancellationToken cancellationToken) where T : EntityBase;
 
         /// <summary>
         /// trae una lista de objetos
@@ -54,6 +54,6 @@ namespace Cafe.Climate.Domain.Ports
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task<List<T>> GetObjects<T>( Expression<Func<T, bool>> expressionConditional, 
-            CancellationToken? cancellationToken = null) where T : EntityBase;
+            CancellationToken cancellationToken) where T : EntityBase;
     }
 }

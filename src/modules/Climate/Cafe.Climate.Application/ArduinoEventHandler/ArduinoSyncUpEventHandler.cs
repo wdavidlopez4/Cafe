@@ -7,6 +7,7 @@ using JKang.EventBus;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cafe.Climate.Application.ArduinoEventHandler
@@ -29,11 +30,12 @@ namespace Cafe.Climate.Application.ArduinoEventHandler
                 throw new EntityNullException("la operacion es invalida por que aun no se a ejecutado el evento para el cultivo");
 
             //obtenemos el cultivo con el monitoreo
-            var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == @event.CropId, x => x.Monitoring);
+            var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == @event.CropId, x => x.Monitoring,
+                new CancellationToken());
 
             //creamos y guardamos el arduino "sincronizamos el arduino (true)"
             var arduino = (Arduino) this.factory.CreateArduino(Guid.Parse(@event.Id), crop.Monitoring.Id, true);
-            arduino = await this.repository.Save<Arduino>(arduino);
+            arduino = await this.repository.Save<Arduino>(arduino, new CancellationToken());
         }
     }
 }

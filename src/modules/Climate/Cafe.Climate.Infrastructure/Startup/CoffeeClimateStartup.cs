@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration; //getConnectionString
 using Cafe.Climate.Infrastructure.EFcore;
 using Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData;
 using Cafe.Climate.Application.ArduinoServices.QueryArduinoByRangeTime;
+using System.Reflection;
 
 namespace Cafe.Climate.Infrastructure.Startup
 {
@@ -15,11 +16,12 @@ namespace Cafe.Climate.Infrastructure.Startup
     {
         public static void ConfigurationServices(IServiceCollection services, IConfiguration configuration)
         {
+            InyectionContainer.Inyection(services);
             ConfigurationSqlServer(services, configuration);
             ConfigurarMapper(services);
             ConfigurarMediador(services);
 
-            InyectionContainer.Inyection(services);
+            
         }
 
         private static void ConfigurationSqlServer(IServiceCollection services, IConfiguration configuration)
@@ -38,8 +40,8 @@ namespace Cafe.Climate.Infrastructure.Startup
 
         private static void ConfigurarMediador(IServiceCollection services)
         {
-            services.AddMediatR(typeof(ArduinoDataSet).Assembly);
-            services.AddMediatR(typeof(ArduinoByRangeTime).Assembly);
+            services.AddMediatR(typeof(ArduinoDataSet).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(ArduinoByRangeTime).GetTypeInfo().Assembly);
         }
     }
 }

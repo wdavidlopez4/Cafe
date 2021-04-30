@@ -21,7 +21,7 @@ namespace Cafe.Configuration.Infrastructure.EFcore
         public DbSet<ManualMonitoring> ManualMonitorings { get; set; }
 
         
-        public CoffeeContext(DbContextOptions options) : base(options)
+        public CoffeeContext(DbContextOptions<CoffeeContext> options) : base(options)
         {
 
         }

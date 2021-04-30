@@ -19,7 +19,7 @@ namespace Cafe.Climate.Infrastructure.EFcore
         public DbSet<TemperatureInceptThreshold> TemperatureInceptThresholds { get; set; }
 
 
-        public ClimateContext(DbContextOptions options) : base(options)
+        public ClimateContext(DbContextOptions<ClimateContext> options) : base(options)
         {
 
         }
