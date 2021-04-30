@@ -1,5 +1,6 @@
 using Cafe.Climate.Application.ArduinoEventHandler;
 using Cafe.Climate.Application.CropEventHandler;
+using Cafe.Climate.Infrastructure.Startup;
 using Cafe.Configuration.Infrastructure.Startup;
 using Cafe.Configuration.IntegrationEvents.ArduinoEvents;
 using Cafe.Configuration.IntegrationEvents.CropEvents;
@@ -70,6 +71,7 @@ namespace Cafe.Web.Api
             //iniciar y configurar los modulos
             CoffeeConfigurationStartup.ConfigurationServices(services, this.Configuration);
             CoffeeIntelligentStartup.ConfigurationServices(services, this.Configuration);
+            CoffeeClimateStartup.ConfigurationServices(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
