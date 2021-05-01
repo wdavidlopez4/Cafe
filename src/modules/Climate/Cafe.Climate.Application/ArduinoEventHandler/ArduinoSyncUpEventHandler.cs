@@ -33,9 +33,15 @@ namespace Cafe.Climate.Application.ArduinoEventHandler
             var crop = await this.repository.GetWithNestedObject<Crop>(x => x.Id == @event.CropId, x => x.Monitoring,
                 new CancellationToken());
 
-            //creamos y guardamos el arduino "sincronizamos el arduino (true)"
-            var arduino = (Arduino) this.factory.CreateArduino(Guid.Parse(@event.Id), crop.Monitoring.Id, true);
-            arduino = await this.repository.Save<Arduino>(arduino, new CancellationToken());
+            //creamos un nuevo arduino
+            var arduino = (Arduino)this.factory.CreateArduino(Guid.Parse(@event.Id), crop.Monitoring.Id, true);
+
+            //guardamos o modificamos el arduino
+            if (this.repository.Exists<Arduino>(x => x.Id == @event.Id) == false)
+                arduino = await this.repository.Save<Arduino>(arduino, new CancellationToken());
+            else
+                arduino = await this.repository.Update<Arduino>(arduino, new CancellationToken());
+
         }
     }
 }
