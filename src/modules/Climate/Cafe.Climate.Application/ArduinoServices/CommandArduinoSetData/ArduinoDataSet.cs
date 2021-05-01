@@ -16,8 +16,6 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
 
         public double Altitude { get; set; }
 
-        public DateTime Time { get; set; }
-
         public List<Claim> Claims { get; set; }
     }
 }
