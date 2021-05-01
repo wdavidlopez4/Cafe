@@ -49,7 +49,7 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
                 throw new ArgumentNullException("el usuario no pertenece al cultivo. verificar el token");
 
             //crear, guardar y mapear los datos del arduino "temperatura humedad altitud..."
-            var data = (ArduinoData) factory.CreateArduinoData(request.Temperature, request.Humididy, request.Altitude, request.Time, 
+            var data = (ArduinoData) factory.CreateArduinoData(request.Temperature, request.Humididy, request.Altitude, DateTime.Now, 
                 crop.Monitoring.Arduino.Id);
 
             data = await this.repository.Save<ArduinoData>(data, cancellationToken);
