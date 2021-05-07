@@ -15,6 +15,8 @@ namespace Cafe.Climate.Domain.Entities
 
         public string CropId { get; private set; }
 
+        public ClimateAccumulated ClimateAccumulated { get; private set; }
+
         internal Monitoring(string cropId, List<ClimaticFactor> climate = null, Guid? id = null) : base(id)
         {
             this.Climate = climate;

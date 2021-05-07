@@ -22,10 +22,10 @@ namespace Cafe.Climate.Domain.Factories
             return new ArduinoData(temperature, humididy, altitude, time, ArduinoId);
         }
 
-        public EntityBase CreateAverageWeather(double accumulatedTemperatureWeek, double accumulatedTemperatureMonth, double accumulatedTemperatureHour, double accumulatedTemperatureMinute)
+        public EntityBase ClimateAccumulated(double accumulatedTemperature, double accumulatedHumedity,
+            double accumulatedAltitude, string monitoringId)
         {
-            return new AverageWeather(accumulatedTemperatureWeek, accumulatedTemperatureMonth, 
-                accumulatedTemperatureHour, accumulatedTemperatureMinute);
+            return new ClimateAccumulated(accumulatedTemperature, accumulatedHumedity, accumulatedAltitude, monitoringId);
         }
 
         public EntityBase CreateMonitoring(string cropId, List<ClimaticFactor> climate = null, Guid? id = null)
@@ -33,12 +33,11 @@ namespace Cafe.Climate.Domain.Factories
             return new Monitoring(cropId, climate, id);
         }
 
-        public EntityBase CreateTemperatureInceptThreshold(string monitoringId, string averageWeatherId, 
-            string optimalStateDevelopmentThreshold, double optimalTemperatureDevelopmentThreshold, 
-            double UmD, double UMD, Guid? id = null)
+        public EntityBase CreateTemperatureInceptThreshold(string monitoringId, OptimalDevelopmentThresholdEnum optimalStateDevelopmentThreshold,
+            double optimalTemperatureDevelopmentThreshold, Guid? id = null)
         {
-            return new TemperatureInceptThreshold(monitoringId, averageWeatherId, optimalStateDevelopmentThreshold,
-                optimalTemperatureDevelopmentThreshold, UmD, UMD, id);
+            return new TemperatureInceptThreshold(monitoringId, optimalStateDevelopmentThreshold, 
+                optimalTemperatureDevelopmentThreshold, id);
         }
 
         public EntityBase CreateCrop(Guid id, string name, string coffeeGrowerId)
