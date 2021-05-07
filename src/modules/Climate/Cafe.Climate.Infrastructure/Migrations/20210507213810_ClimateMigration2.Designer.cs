@@ -4,14 +4,16 @@ using Cafe.Climate.Infrastructure.EFcore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cafe.Climate.Infrastructure.Migrations
 {
     [DbContext(typeof(ClimateContext))]
-    partial class ClimateContextModelSnapshot : ModelSnapshot
+    [Migration("20210507213810_ClimateMigration2")]
+    partial class ClimateMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
