@@ -45,5 +45,10 @@ namespace Cafe.Climate.Domain.Factories
         {
             return new Crop(id, name, coffeeGrowerId);
         }
+
+        public EntityBase CreateTemperatureDegreesDays(string monitoringId, double degreesDays, DateTime time)
+        {
+            return new TemperatureDegreesDays(monitoringId, degreesDays, time);
+        }
     }
 }

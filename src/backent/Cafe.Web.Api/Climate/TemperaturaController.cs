@@ -1,4 +1,5 @@
-﻿using Cafe.Climate.Application.TemperatureInceptThresholdServices.CommandInceptThresholdCalculate;
+﻿using Cafe.Climate.Application.TemperatureDegreesDaysServices.CommandDegreesDaysCalculate;
+using Cafe.Climate.Application.TemperatureInceptThresholdServices.CommandInceptThresholdCalculate;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -44,10 +45,24 @@ namespace Cafe.Web.Api.Climate
         /// <param name="cultivoDto"></param>
         /// <returns></returns>
         [Route("GradosDia")]
-        [HttpGet]
-        public async Task<IActionResult> CalcularGradosDia(string idCultivo, DateTime fechaConsultaActual)
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> CalcularGradosDia(DegreesDaysCalculate degreesDaysCalculate)
         {
-            return await Task.FromResult(Ok($"Grados dia: {idCultivo} {fechaConsultaActual}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            degreesDaysCalculate.Claims = claims;
+            var dto = await this.mediator.Send(degreesDaysCalculate);
+
+            if (dto == null)
+                return BadRequest("no se pudo crear el cultivo.");
+            else
+                return Ok(dto);
         }
 
         /// <summary>

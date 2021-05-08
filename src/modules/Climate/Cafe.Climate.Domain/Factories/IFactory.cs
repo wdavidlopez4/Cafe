@@ -23,5 +23,7 @@ namespace Cafe.Climate.Domain.Factories
 
         public EntityBase CreateCrop(Guid id, string name, string coffeeGrowerId);
 
+        public EntityBase CreateTemperatureDegreesDays(string monitoringId, double degreesDays, DateTime time);
+
     }
 }
