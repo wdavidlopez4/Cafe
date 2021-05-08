@@ -14,7 +14,7 @@ namespace Cafe.Climate.Domain.Factories
         public EntityBase CreateArduinoData(double temperature, double humididy, double altitude, DateTime time, string ArduinoId);
 
         public EntityBase ClimateAccumulated(double accumulatedTemperature, double accumulatedHumedity,
-            double accumulatedAltitude, string monitoringId);
+             double accumulatedAltitude, int contData, string monitoringId, Guid? id = null);
 
         public EntityBase CreateMonitoring(string cropId, List<ClimaticFactor> climate = null, Guid? id = null);
 

@@ -52,8 +52,62 @@ namespace Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData
             var data = (ArduinoData) factory.CreateArduinoData(request.Temperature, request.Humididy, request.Altitude, DateTime.Now, 
                 crop.Monitoring.Arduino.Id);
 
+            //accumular datos de clima
+            await AccumulateClimate(request.Temperature, request.Humididy, request.Altitude, 
+                crop.Monitoring.Id, cancellationToken);
+
+
             data = await this.repository.Save<ArduinoData>(data, cancellationToken);
             return this.autoMapping.Map<ArduinoData, ArduinoDataSetDTO>(data);
         }
+
+        /// <summary>
+        /// acumula el clima
+        /// </summary>
+        /// <param name="IdClimateAccumulated"></param>
+        /// <param name="temperature"></param>
+        /// <param name="humedity"></param>
+        /// <param name="altitude"></param>
+        /// <param name="monitoringId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task AccumulateClimate(double temperature, double humedity, double altitude, 
+            string monitoringId, CancellationToken cancellationToken)
+        {
+            ClimateAccumulated climateAccumulated;
+
+            //preguntamos si hay algun acumulador que exista con el id de ese monitoreo
+            if (this.repository.Exists<ClimateAccumulated>(x => x.MonitoringId == monitoringId) == false)
+            {
+                //crear acumulador de temperatura
+                climateAccumulated = (ClimateAccumulated)this.factory.ClimateAccumulated(
+                    accumulatedTemperature: temperature,
+                    accumulatedHumedity: humedity,
+                    accumulatedAltitude: altitude,
+                    contData: 1,
+                    monitoringId: monitoringId);
+
+                //guardamos
+                await this.repository.Save<ClimateAccumulated>(climateAccumulated, cancellationToken);
+            }
+            else
+            {
+                var climateAccumulared = await this.repository.Get<ClimateAccumulated>(
+                    x => x.MonitoringId == monitoringId, cancellationToken);
+
+                //crear acumulador de temperatura con los datos anteriormente guardamos
+                climateAccumulated = (ClimateAccumulated)this.factory.ClimateAccumulated(
+                    accumulatedTemperature: climateAccumulared.AccumulatedTemperature + temperature,
+                    accumulatedHumedity: climateAccumulared.AccumulatedHumedity + humedity,
+                    accumulatedAltitude: climateAccumulared.AccumulatedAltitude + altitude,
+                    contData: climateAccumulared.ContData + 1,
+                    monitoringId: monitoringId,
+                    id: Guid.Parse(climateAccumulared.Id));
+
+                //modificar
+                await this.repository.Update<ClimateAccumulated>(climateAccumulared, cancellationToken);
+            }
+        }
+
     }
 }

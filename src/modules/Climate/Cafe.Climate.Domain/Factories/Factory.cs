@@ -23,9 +23,10 @@ namespace Cafe.Climate.Domain.Factories
         }
 
         public EntityBase ClimateAccumulated(double accumulatedTemperature, double accumulatedHumedity,
-            double accumulatedAltitude, string monitoringId)
+            double accumulatedAltitude, int contData, string monitoringId, Guid? id = null)
         {
-            return new ClimateAccumulated(accumulatedTemperature, accumulatedHumedity, accumulatedAltitude, monitoringId);
+            return new ClimateAccumulated(accumulatedTemperature, accumulatedHumedity, 
+                accumulatedAltitude, contData, monitoringId, id);
         }
 
         public EntityBase CreateMonitoring(string cropId, List<ClimaticFactor> climate = null, Guid? id = null)

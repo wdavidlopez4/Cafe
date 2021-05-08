@@ -19,14 +19,15 @@ namespace Cafe.Climate.Domain.Entities
         /// <summary>
         /// contador de los datos
         /// </summary>
-        public string ContData { get; private set; }
+        public int ContData { get; private set; }
 
         internal ClimateAccumulated(double accumulatedTemperature, double accumulatedHumedity, 
-            double accumulatedAltitude, string monitoringId):base()
+            double accumulatedAltitude, int contData, string monitoringId, Guid? id = null):base(id)
         {
             this.AccumulatedTemperature = accumulatedTemperature;
             this.AccumulatedHumedity = accumulatedHumedity;
             this.AccumulatedAltitude = accumulatedAltitude;
+            this.ContData = contData;
 
             this.MonitoringId = monitoringId;
 

@@ -96,5 +96,18 @@ namespace Cafe.Climate.Infrastructure.Repositories
                 throw new Exception($"no se pudo actualizr  la entidad {e.Message}");
             }
         }
+
+        public async Task<T> Get<T>(Expression<Func<T, bool>> expression, CancellationToken cancellationToken) where T : EntityBase
+        {
+            try
+            {
+                return await context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"no se pudo recuperar la entidad {e.Message}");
+            }
+        }
     }
 }
