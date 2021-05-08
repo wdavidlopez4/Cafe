@@ -57,7 +57,7 @@ namespace Cafe.Web.Api.Climate
         /// <param name="objeto"></param>
         /// <returns></returns>
         [Route("Umbral")]
-        [HttpGet]
+        [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> CalcularUmbralDesarrollo(InceptThresholdCalculate inceptThresholdCalculate)
         {
