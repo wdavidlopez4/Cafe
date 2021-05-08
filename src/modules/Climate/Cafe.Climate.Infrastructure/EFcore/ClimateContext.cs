@@ -16,6 +16,8 @@ namespace Cafe.Climate.Infrastructure.EFcore
 
         public DbSet<Monitoring> Monitorings { get; set; }
 
+        public DbSet<ClimateAccumulated> ClimateAccumulateds { get; set; }
+
         public DbSet<TemperatureInceptThreshold> TemperatureInceptThresholds { get; set; }
 
 

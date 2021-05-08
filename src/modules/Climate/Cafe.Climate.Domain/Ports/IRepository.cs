@@ -55,5 +55,14 @@ namespace Cafe.Climate.Domain.Ports
         /// <returns></returns>
         public Task<List<T>> GetObjects<T>( Expression<Func<T, bool>> expressionConditional, 
             CancellationToken cancellationToken) where T : EntityBase;
+
+        /// <summary>
+        /// obtener objeto
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<T> Get<T>(Expression<Func<T, bool>> expression, CancellationToken cancellationToken) where T : EntityBase;
     }
 }

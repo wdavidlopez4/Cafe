@@ -10,7 +10,6 @@ namespace Cafe.Climate.Domain.Validations
         internal static readonly Predicate<TemperatureInceptThreshold>[] Validation =
         {
             (x) => x.Id != null && x.Id != "",
-            (x) => x.OptimalStateDevelopmentThreshold != null && x.OptimalStateDevelopmentThreshold != "",
         };
     }
 }

@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cafe.Climate.Application.TemperatureInceptThresholdServices.CommandInceptThresholdCalculate;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Cafe.Web.Api.Climate
@@ -11,6 +16,14 @@ namespace Cafe.Web.Api.Climate
     [ApiController]
     public class TemperaturaController : ControllerBase
     {
+
+        private readonly IMediator mediator;
+
+        public TemperaturaController(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
+
         /// <summary>
         /// calcula los grados acumulados para el desarrollo del insepto se denota como K, se consulta cada 24 horas para moscar cambios
         /// le pasamos el id del cultivo, y la fecha de consulta actual
@@ -44,10 +57,24 @@ namespace Cafe.Web.Api.Climate
         /// <param name="objeto"></param>
         /// <returns></returns>
         [Route("Umbral")]
-        [HttpGet]
-        public async Task<IActionResult> CalcularUmbralDesarrollo(string idCultivo)
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> CalcularUmbralDesarrollo(InceptThresholdCalculate inceptThresholdCalculate)
         {
-            return await Task.FromResult(Ok($"Grados acumulados {idCultivo}"));
+            if (!ModelState.IsValid)
+                return BadRequest("el modelo no es valido, ingrese correctamente los datos.");
+
+            List<Claim> claims = User.Claims.ToList();
+            if (claims == null)
+                return BadRequest("no se pudieron obtener los claims del token, verifique el token.");
+
+            inceptThresholdCalculate.Claims = claims;
+            var dto = await this.mediator.Send(inceptThresholdCalculate);
+
+            if (dto == null)
+                return BadRequest("no se pudo crear el cultivo.");
+            else
+                return Ok(dto);
         }
 
         [Route("DuracionHuevo")]

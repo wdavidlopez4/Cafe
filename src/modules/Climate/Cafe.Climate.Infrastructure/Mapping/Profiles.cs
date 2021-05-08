@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cafe.Climate.Application.ArduinoServices.CommandArduinoSetData;
 using Cafe.Climate.Application.ArduinoServices.QueryArduinoByRangeTime;
+using Cafe.Climate.Application.TemperatureInceptThresholdServices.CommandInceptThresholdCalculate;
 using Cafe.Climate.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Cafe.Climate.Infrastructure.Mapping
         {
             this.CreateMap<ArduinoData, ArduinoByRangeTimeDTO>();
             this.CreateMap<ArduinoData, ArduinoDataSetDTO>();
+            this.CreateMap<TemperatureInceptThreshold, InceptThresholdCalculateDTO>();
         }
     }
 }
